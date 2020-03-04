@@ -1,0 +1,9 @@
+# Server Folder
+/Servers/
+/RemoteSystemsTempFiles/
+
+*.class
+
+# Eclipse
+.metadata/
+.classpath
