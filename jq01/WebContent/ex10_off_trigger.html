@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+</style>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+	$(function() {
+		var h1ClickCnt = 0;
+		var h2ClickCnt = 0;
+		$('#h1').click(function() {
+			h1ClickCnt++;
+			if(h1ClickCnt>=6){
+				$(this).off();	// 크릭한 횟수가 6번이면 이벤트 제거
+			} else {
+				$(this).prepend('♥');
+				$(this).append('♥');
+				//$(this).html($(this).html() + '♥');
+			}
+		});
+		
+		$('#h2').click(function() {
+			h2ClickCnt++;
+			if(h2ClickCnt>=6){
+				$(this).off();	// 크릭한 횟수가 6번이면 이벤트 제거
+			} else {
+				$(this).prepend('♥');
+				$(this).append('♥');
+				//$(this).html($(this).html() + '♥');
+			}
+		});
+		
+		// 1초에 한번씩 h2 클릭이벤트 강제 발생
+		setInterval(function() {
+			$('h1').last().trigger('click');	// h1태그중 마지막 h1태그에 트리거실행
+		}, 1000);
+	});
+</script>
+</head>
+<body>
+	<h1 id="h1">start1 : </h1>
+	<h1 id="h2">start2 : </h1>
+</body>
+</html>

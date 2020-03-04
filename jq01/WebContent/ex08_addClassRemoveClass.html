@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+* {
+	margin: 0 auto;
+}
+table td {
+	background-color: #AAFFAA;
+	width: 200px;
+	height: 200px;
+}
+.tdClick {
+	background-color: red;
+}
+</style>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+	$(function() {
+		$('td').on('click', function() {
+			$('td').removeClass('tdClick');
+			$(this).addClass('tdClick');
+		});
+	});
+</script>
+</head>
+<body>
+	<table>
+		<tr>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+		</tr>
+	</table>
+</body>
+</html>

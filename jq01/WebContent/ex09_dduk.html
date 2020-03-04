@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+* {
+	margin: 0 auto;
+}
+h2, div {
+	text-align: center;
+}
+table td {
+	background-color: #AAFFAA;
+	width: 200px;
+	height: 200px;
+	text-align: center;
+	font-size: 20px;
+}
+.tdClick {
+	background-color: red;
+}
+</style>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+	$(function() {
+		var ddukIdx = parseInt(Math.random()*9);
+		
+		$('td').click(function() {
+			var num = Number($(this).attr('id');
+			$('td').removeClass('tdClick');
+			if(ddukIdx == num){
+				$(this).css('background-image', 'url("dduk.jpg")');
+				$('#msg').html('정답입니다!');
+				// 정답을 맞추면 이벤트 제거
+				$('td').off();	// td에대한 모든 이벤트 제거
+			} else {
+				$('#msg').html('틀렸어요!!');
+				$(this).addClass('tdClick');
+			}
+		});
+		
+		$('#H1').html('<h2>현재 떡이 있는 곳은 ' + ddukIdx + '번 입니다.</h2>');
+	});
+</script>
+</head>
+<body>
+	<table>
+		<tr>
+			<td id="0"></td>
+			<td id="1"></td>
+			<td id="2"></td>
+		</tr>
+		<tr>
+			<td id="3"></td>
+			<td id="4"></td>
+			<td id="5"></td>
+		</tr>
+		<tr>
+			<td id="6"></td>
+			<td id="7"></td>
+			<td id="8"></td>
+		</tr>
+	</table>
+	<div id="msg"></div>
+	<h2 id=H1></h2>
+</body>
+</html>

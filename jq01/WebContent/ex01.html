@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="js/jquery-3.4.1.min.js"></script>
+<style>
+b{color: red;}
+</style>
+<script>
+// jQuery 가능
+// window.onload와 같은 문법
+$(document).ready(function() {
+	// 이 안에 jquery를 넣는다.
+	$('#p1').click(function() {
+		// id가 p1인 것을 클릭할때 할 일
+		//$('#p1').html('<b> 클릭하면 내용이 바뀜</b>');
+	});
+});
+$(function () {
+	// jQuery가능
+	$('p').click(function () {
+		//$(this).text('<b>태그 내용 바뀜</b>');
+		$('#p1').html('<b> 클릭하면 내용이 바뀜</b>');
+	});
+});
+</script>
+</head>
+<body>
+	<p id="p1">p태그 하나</p>
+</body>
+</html>

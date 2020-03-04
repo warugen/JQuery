@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+</style>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+	$(function() {
+		var array = [{name : '가메출판사', link : 'http://www.kame.co.kr'}, 
+					 {name : '네이버', link : 'http://www.naver.com'},
+					 {name : '다음', link : 'http://www.daum.net'},
+					 {name : '구글', link : 'http://www.google.com'}];
+		// jQuery용 each
+		$.each(array, function(idx, item) {
+			var out = '<h1><a href="' + item.link + '">' + item.name + "</a></h1>";
+			$('body').html($('body').html() + out);
+		});
+		
+		#(array).each(function(idx, item) {
+			var out = '<h1><a href="' + item.link + '">' + item.name + "</a></h1>";
+			$('body').html($('body').html() + out);
+		});
+		
+		/*
+		//javascript용 forEach()
+		array.forEach(function(item, idx) {
+			var out = '<h1><a href="' + item.link + '">' + item.name + "</a></h1>";
+			document.body.innerHTML += out;
+		});
+		*/
+	});
+</script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+
+#wrap {
+	width : 500px;
+	height: 500px;
+	margin: 0 auto;
+	text-align: center;
+}
+div {
+	align-items: center;
+}
+input {
+	width: 50px;
+}
+.correct {
+	color: blue;
+	font-size: 20px;
+}
+
+.incorrect {
+	color:red;
+	font-size: 20px;
+}
+</style>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+	$(function() {
+		var su1 = parseInt(Math.random()*10);
+		var su2 = parseInt(Math.random()*10);
+		var sum = su1 + su2;
+		console.log("sum : " + sum);
+		$('#num1').val(su1);
+		$('#num2').val(su2);
+		
+		$('#calc').click(function() {
+			var dap = Number($('#dap').val());
+			$('#anser').off();
+			if(sum == dap) {
+				// 정답
+				$('#anser').text(su1 + " + " +su2 + " = " + dap + " 는 맞습니다.");
+				$('#anser').addClass('correct');
+			} else {
+				// 오답
+				$('#anser').text(su1 + " + " +su2 + " = " + dap + " 는 틀립니다.");
+				$('#anser').addClass('incorrect');
+			}
+		});
+		
+		$('#reset').click(function() {
+			location.reload();
+		})
+	});
+</script>
+</head>
+<body>
+	<div id="wrap">
+	1단계 : <input type="text" name="num1" id="num1" readonly="readonly" />  +  <input type="text" name="num2" id="num2" readonly="readonly" />  = <input type="text" name="dap" id="dap" />
+ 	<p></p>
+	<button id="reset">다시해봐</button>
+	<button id="calc">체점해봐</button>
+	<hr />
+	<div id="anser"></div>
+	</div>
+</body>
+</html>
