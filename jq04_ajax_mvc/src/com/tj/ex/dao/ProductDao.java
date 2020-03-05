@@ -61,7 +61,7 @@ public class ProductDao {
 			try {
 				if(rs !=null) rs.close();
 				if(pstmt != null) pstmt.close();
-				if(conn !=null) pstmt.close();
+				if(conn !=null) conn.close();
 			} catch (Exception e2) {
 				// TODO: handle exception
 			}
