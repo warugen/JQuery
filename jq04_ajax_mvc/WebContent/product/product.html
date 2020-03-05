@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+</style>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+	$(function() {
+		$('#confirm').click(function() {
+			$.ajax({
+				url : '../productStock.do',
+				type : 'get',
+				dataType : 'html',
+				data : 'pname='+$('#pname').val(),
+				success : function(data, status) {
+					$('#stockCnt').html(data);
+				}
+			})
+		});
+		
+		$('#al').click(function() {
+			var str = $('#stockCnt').text().trim();
+			alert(str);
+		});
+	});
+</script>
+</head>
+<body>
+<table>
+	<tr>
+		<th>물건명</th>
+		<td><input type="text" name="pname" id="pname" /><span id="stockCnt"> &nbsp; &nbsp; </span></td>
+	</tr>
+	<tr>
+		<td colspan="2" style="text-align: center;"><button id="confirm">재고량 확인</button><button id="al">alert</button></td>
+	</tr>
+</table>
+</body>
+</html>

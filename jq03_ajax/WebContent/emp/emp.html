@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+p {
+	text-align: center;
+}
+</style>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+	$(function() {
+		$.ajax({
+			url : 'empSearchResult.jsp',
+			dataType : 'html',
+			data : 'ename=&job=',
+			success : function(data, status) {
+				$('#showEmp').html(data);
+			}
+		});
+		/*
+		$('#ename').keyup(function() {
+			var ename = $('#ename').val().toUpperCase();
+			var job = $('#job').val().toUpperCase();
+			$('#ename').val(ename);
+			$('#job').val(job);
+			var sendData = "ename="+ename+"&job="+job;
+			
+			$.ajax({
+				url : 'empSearchResult.jsp',
+				dataType : 'html',
+				data : sendData,
+				success : function(data, status) {
+					$('#showEmp').html(data);
+				}
+			});
+		});
+		
+		$('#job').keyup(function() {
+			var ename = $('#ename').val().toUpperCase();
+			var job = $('#job').val().toUpperCase();
+			$('#ename').val(ename);
+			$('#job').val(job);
+			var sendData = "ename="+ename+"&job="+job;
+			
+			$.ajax({
+				url : 'empSearchResult.jsp',
+				dataType : 'html',
+				data : sendData,
+				success : function(data, status) {
+					$('#showEmp').html(data);
+				}
+			});
+		});
+		*/
+		
+		$('.actionAjax').keyup(function() {
+			var ename = $('#ename').val().toUpperCase();
+			var job = $('#job').val().toUpperCase();
+			$('#ename').val(ename);
+			$('#job').val(job);
+			var sendData = "ename="+ename+"&job="+job;
+			
+			$.ajax({
+				url : 'empSearchResult.jsp',
+				dataType : 'html',
+				data : sendData,
+				success : function(data, status) {
+					$('#showEmp').html(data);
+				}
+			});
+		});
+		
+	});
+</script>
+</head>
+<body>
+<p>
+	이름 <input type="text" name="ename" id="ename" class="actionAjax" />
+	직책 <input type="text" name="job" id="job" class="actionAjax" />
+</p>
+
+<div id="showEmp"></div>
+</body>
+</html>
