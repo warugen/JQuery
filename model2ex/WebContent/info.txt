@@ -1,0 +1,46 @@
+● 메인화면 - 푸터에서 관리자 로그인 클릭 - 관리자 로그인화면 - 로그인하면 전체회원보기 페이지로 이동 -
+   로그아웃하면 - 메인화면으로 이동
+
+● 메인화면 - 헤더에서 로그인 클릭 - 사용자 로그인화면 - 로그인하면 - 헤더변경, 고객센터페이지로 이동
+
+● 사용자 로그인화면에서 회원가입 클릭 - 회원가입 페이지 이동 - 회원가입처리 - 
+   회원가입완료되면 로그인화면으로 이동후 ID란에 가입한 아이디 자동으로 입력됨 - 로그인처리 - 고객센터이동
+
+● 고객센터페이지 - 글쓰기 항목은 로그인 여부에 따라 다르게 나옴 - 글쓰기 클릭하면 - 글쓰기폼으로 이동 - 글쓰기 처리
+
+● 로그인시 - 헤더에 정보수정 클릭 - 정부수정 페이지로 이동 - 정보수정 처리후 고객센터페이지로 이동
+
+ALoginService.java - 관리자 로그인 처리
+
+BContentSerivice.java - 게시글 등록처리
+BDeleteService.java - 게시글 삭제처리
+BListService.java - 게시글목록 처리
+BModifyService.java - 게시글수정처리
+BReplyService.java - 게시글답변처리
+BReplyViewSerivce.java - 답변글보기처리
+BWriteService.java - 게시글등록처리
+
+MAllViewService.java - 회원정보가져오는 처리 - adminlogin.do
+MidConfirmService.java - 회원아이디중복처리 - idConfirm.jsp
+MJoinSerivce.java - 회원가입처리
+MLoginService.java - 회원로그인 처리
+MlogoutService.java - 회원로그아웃 처리
+MModifyService.java - 회원정보수정처리
+
+/admin/adminLogin.jsp - 관리자 로그인화면 - 로그인버튼클릭하면 /adminlogin.do 호출
+
+/fileboard/content_view.jsp - 게시글보기화면
+/fileboard/list.jsp - 게시글목록보기화면
+/fileboard/modify_view.jsp - 글수정 화면
+/fileboard/reply_view.jsp - 답변글 화면
+/fileboard/write_view.jsp - 글쓰기 화면
+/fileboard/insert55.jsp - 더미 디비 페이지
+
+/member/idConfirm.jsp - 회원가입할때 ajax에서 중복 id체크
+/member/join.jsp - 회원가입 페이지
+/member/login.jsp - 사용자 로그인페이지
+/member/mAllview.jsp - 전체회원 목록페이지
+/member/modify.jsp - 회원정보수정 페이지
+
+
+index.jsp
