@@ -53,6 +53,7 @@
 	</c:if>
 	<c:if test="${not empty member}"> <%-- 로그인 후 화면 --%>
 		<td><a href="${conPath }/write_view.do"> 글 쓰 기 </a></td>
+		<td><a href="${conPath }/write_view2.do"> 글 쓰 기2 </a></td>
 	</c:if>
 	</tr>
 </table>

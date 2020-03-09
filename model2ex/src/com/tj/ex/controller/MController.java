@@ -124,6 +124,10 @@ public class MController extends HttpServlet {
 			// 글쓰기 버튼 눌렀을때 -> 글쓰기 화면으로 이동하기
 			viewPage = "/fileboard/write_view.jsp";
 			
+		} else if (command.equals("/write_view2.do")) {
+			// 글쓰기 버튼 눌렀을때 -> 글쓰기 화면으로 이동하기
+			viewPage = "/fileboard/write_view2.jsp";
+			
 		} else if (command.equals("/write.do")) {
 			// 글쓰기 저장하기 BWriteService.java
 			service = new  BWriteService();
