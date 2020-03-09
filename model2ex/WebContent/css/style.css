@@ -2,12 +2,11 @@
 
 #content_form {
 	width: 800px;
-	height: 500px;
-	margin: 0 auto;
-	text-align: center;
-	
+	height: 800px;
+	margin: 100px auto 0px;
 }
 
+}
 #content_form table {
 	border: 2px solid pink;
 	width: 90%;

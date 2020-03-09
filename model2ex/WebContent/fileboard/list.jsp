@@ -40,6 +40,9 @@
 <c:if test="${replyResult eq FAIL }">
 	<script>alert('답변글 달기 실패')</script>
 </c:if>
+<c:if test="${not empty modifyResult  }">
+	<script>alert('${modifyResult}');</script>
+</c:if>
 <jsp:include page="../main/header.jsp"/>
 <div id="content_form">
 <table>
@@ -77,7 +80,7 @@
 				└─
 			</c:if>
 			</c:forEach>
-			<a href="${conPath }/content_view.do?bid=${dto.fId}&pageNum=${pageNum}">${dto.fTitle }</a>
+			<a href="${conPath }/content_view.do?fId=${dto.fId}&pageNum=${pageNum}">${dto.fTitle }</a>
 			
 			</td>
 			<td>${dto.fHit }</td>

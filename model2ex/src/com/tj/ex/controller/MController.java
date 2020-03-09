@@ -10,7 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.tj.ex.service.ALoginService;
+import com.tj.ex.service.BContentService;
+import com.tj.ex.service.BDeleteService;
 import com.tj.ex.service.BListService;
+import com.tj.ex.service.BModifyService;
+import com.tj.ex.service.BModifyViewService;
+import com.tj.ex.service.BReplyService;
+import com.tj.ex.service.BReplyViewService;
+import com.tj.ex.service.BWriteService;
 import com.tj.ex.service.MAllViewService;
 import com.tj.ex.service.MJoinSerivce;
 import com.tj.ex.service.MLoginService;
@@ -111,20 +118,53 @@ public class MController extends HttpServlet {
 		} else if (command.equals("/modify.do")) {
 			service = new MModifyService();
 			service.execute(request, response);
-			viewPage = "";
+			viewPage = "/list.do";
 			
-		} else if (command.equals("")) {
-			viewPage = "";
+		} else if (command.equals("/write_view.do")) {
+			// 글쓰기 버튼 눌렀을때 -> 글쓰기 화면으로 이동하기
+			viewPage = "/fileboard/write_view.jsp";
 			
-		} else if (command.equals("")) {
-			viewPage = "";
+		} else if (command.equals("/write.do")) {
+			// 글쓰기 저장하기 BWriteService.java
+			service = new  BWriteService();
+			service.execute(request, response);
+			viewPage = "/list.do";
 			
-		} else if (command.equals("")) {
-			viewPage = "";
+		} else if (command.equals("/content_view.do")) {
+			// 게시글 보기 처리  -> BContentService.java
+			service = new BContentService();
+			service.execute(request, response);
+			viewPage = "fileboard/content_view.jsp";
 			
-		} else if (command.equals("")) {
-			viewPage = "";
+		} else if (command.equals("/boradModify_view.do")) {
+			// 글수정하기화면 이동 처리  -> BModifyViewService.java
+			service = new BModifyViewService();
+			service.execute(request, response);
+			viewPage = "fileboard/modify_view.jsp";
 			
+		} else if(command.equals("/boradModify.do")) {
+			// 글수정 처리  -> BModifyService.java
+			service = new BModifyService();
+			service.execute(request, response);
+			viewPage = "list.do";
+			
+		} else if(command.equals("/delete.do")) {
+			// 게시글 삭제 처리  -> BDeleteService.java
+			service = new BDeleteService();
+			service.execute(request, response);
+			viewPage = "list.do";
+			
+		} else if(command.equals("/reply_view.do")) {
+			// 답변글달기 화면 이동 처리  -> BReplyViewService.java
+			service = new BReplyViewService();
+			service.execute(request, response);
+			viewPage = "fileboard/reply_view.jsp";
+			
+		} else if(command.equals("/reply.do")) {
+			// 답변글 달기 처리  -> BReplyService.java
+			service = new BReplyService();
+			service.execute(request, response);
+			viewPage = "list.do";
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
