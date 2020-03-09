@@ -68,7 +68,9 @@ INSERT INTO FILEBOARD (FID, MID, FTITLE, FCONTENT, FFILENAME, FGROUP, FSTEP, FIN
     VALUES (FILEBOARD_SEQ.NEXTVAL, 'aaa','reply','content', null, 1, 1, 1, '192.168.10.151');
     
 INSERT INTO FILEBOARD (FID, MID, FTITLE, FCONTENT, FFILENAME, FGROUP, FSTEP, FINDENT, FIP) 
-    VALUES (FILEBOARD_SEQ.NEXTVAL, 'fff', '[답]가나다', '1111', null, 8, 0, 0, ?)
+    VALUES (FILEBOARD_SEQ.NEXTVAL, 'fff', '[답]가나다', '1111', null, 8, 0, 0, '127.0.0.1');
+    
+SELECT F.* ,MNAME FROM FILEBOARD F, MVC_MEMBER M WHERE F.MID=M.MID ORDER BY FGROUP DESC, FSTEP;
 
 COMMIT;
 ----------------------------------------------------------------------
