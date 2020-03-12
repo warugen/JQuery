@@ -4,6 +4,7 @@
 ------------------------------------------------------------------------------------
 DROP SEQUENCE C_MEMBER_SEQ;
 CREATE SEQUENCE C_MEMBER_SEQ MAXVALUE 999999 NOCACHE NOCYCLE;
+-- DROP TABLE C_MEMBER CASCADE CONSTRAINTS PURGE;
 DROP TABLE C_MEMBER;
 CREATE TABLE C_MEMBER (
 	mId      VARCHAR2(30)  PRIMARY KEY, -- 아이디
@@ -14,7 +15,7 @@ CREATE TABLE C_MEMBER (
 	mBirth   DATE,                      -- 생년월일
 	mAddress VARCHAR2(100),             -- 주소
 	mRdate   DATE DEFAULT SYSDATE,      -- 가입등록일
-	mLelve   NUMBER(1)     DEFAULT 1    -- 회원레벨
+	mLelvel   NUMBER(1)     DEFAULT 1    -- 회원레벨
 );
 
 -- ID 중복체크
@@ -37,7 +38,7 @@ INSERT INTO C_MEMBER (mID, mPw, mName, mEmail, mPhoto, mBirth, mAddress)
 SELECT * FROM C_MEMBER WHERE mID='aaa' and mPW='222';
 
 -- 회원정보 가져오기 (DTO)
-SELECT * FROM C_MEMBER WHERE mId='aaa';
+SELECT * FROM C_MEMBER WHERE mId='aaa' and mLevel =1;
 
 -- 회원정보 수정(mPw, mNAME / mEMAIL, mPHOTO, mBIRTH, mADDRESS 수정 가능)
 UPDATE C_MEMBER SET mPw = '111',
@@ -172,6 +173,9 @@ INSERT INTO CMT_FREEBOARD (cFno, mId, fId, cFtext)
 -- 댓글 삭제
 DELETE FROM CMT_FREEBOARD WHERE cFno = 1;
 
+-- 댓글 수정
+UPDATE CMT_FREEBOARD SET cFtext = '댓글수정', cFrdate = '20/03/01' WHERE cFno=1;
+
 -- 댓글 목록 (fId, cFrdate DESC)
 SELECT * FROM CMT_FREEBOARD WHERE fId = 1 ORDER BY cfrdate;
 
@@ -298,11 +302,14 @@ INSERT INTO CMT_REVIEW (cRno, rId, mId, cRtext)
 -- 댓글 삭제
 DELETE FROM CMT_REVIEW WHERE cRno = 1;
 
+-- 댓글 수정
+UPDATE CMT_FREEBOARD SET cRtext = '댓글수정', cRrdate = '20/03/01' WHERE cRno=1;
+
 -- 댓글 목록 (fId, cFrdate DESC)
 SELECT * FROM CMT_REVIEW WHERE rId = 1 ORDER BY cRrdate;
 
 -- 댓글 목록 (fId, cFrdate DESC, mId로 mName가져오기)
 SELECT C.*, M.mName FROM CMT_REVIEW C, C_MEMBER M WHERE c.mid = m.mid AND C.rId = 1 ORDER BY cRrdate DESC;
 
-SELECT * FROM CMT_REVIEW ORDER BY cRrdate DESC;
+SELECT * FROM CMT_REVIEW ORDER BY cRrdate;
 
