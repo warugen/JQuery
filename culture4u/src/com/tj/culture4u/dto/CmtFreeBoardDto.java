@@ -22,7 +22,7 @@ public class CmtFreeBoardDto {
 	
 	private int cFno;
 	private String mId;
-	private String mName;
+	private String mName;	// join으로 가져오기
 	private int fId;
 	private String cFtext;
 	private Date cFrdate;

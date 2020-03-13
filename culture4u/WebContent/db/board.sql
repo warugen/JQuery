@@ -147,7 +147,7 @@ SELECT * FROM MLIKE GROUP BY mId;
 DELETE FROM MLIKE WHERE zId = 1 AND mId = 'aaa';
 
 -- 해당 id로 스크랩한것 가져오기(목록 가져오기)
-SELECT * FROM MLIKE WHERE mId = 'aaa' ORDER BY  mLid;
+SELECT L.*, M.* FROM MLIKE L, MAGAZINE M  WHERE L.zId = M.zId AND mId = 'aaa' ORDER BY  mLid;
 
 
 ------------------------------------------------------------------------------------
@@ -209,12 +209,13 @@ SELECT LAST_DAY(sysdate) FROM DUAL;
 
 SELECT LAST_DAY(TO_DATE('20/04', 'YY/MM')) FROM DUAL;
 
+-- 필요한가??
 SELECT * FROM (SELECT ROWNUM RN, A.* 
     FROM (SELECT * FROM MONTHLY_SHOW ORDER BY zRdate DESC) A)
 WHERE RN BETWEEN 1 AND 10;
 
 -- 글갯수
-SELECT COUNT(*) FROM MONTHLY_SHOW;
+SELECT COUNT(*) FROM MONTHLY_SHOW WHERE sStartDate >= TRUNC(TO_DATE('20/03', 'YY/MM'), 'MM')  AND sStartDate <= LAST_DAY(TO_DATE('20/03', 'YY/MM')) ORDER BY sStartDate;
 
 
 -- sId로 글 dto보기
@@ -226,7 +227,7 @@ UPDATE MONTHLY_SHOW SET sTitle = '제목수정',
                     sStartDate = '20/06/01',
                     sEndDate = '20/07/01',
                     sPlace = '홍대그라운드',
-                    sRdate = '20/03/25',
+                    sRdate = SYSDATE,
                     sIp = '192.168.2.44'
 WHERE sId=1;
 
@@ -261,15 +262,17 @@ SELECT * FROM CMT_SHOW;
     
 
 -- 댓글 수정
-UPDATE CMT_SHOW SET cZtext = '제목수정', cZrdate = '20/03/01' WHERE cSno=1;
+UPDATE CMT_SHOW SET cStext = '제목수정', cSrdate = '20/03/01' WHERE cSno=1;
 
 -- 댓글 삭제
 DELETE FROM CMT_SHOW WHERE cSno = 1;
 
 -- 댓글 목록 (sId, cSrdate DESC)
-SELECT * FROM CMT_SHOW WHERE sId = 1 ORDER BY cZrdate;
+SELECT * FROM CMT_SHOW WHERE sId = 1 ORDER BY cSrdate;
 
 -- 댓글 목록 (sId, cSrdate DESC, mId로 mName가져오기)
-SELECT C.*, M.mName FROM CMT_SHOW C, C_MEMBER M WHERE c.mid = m.mid AND C.sId = 1 ORDER BY cZrdate;
+SELECT C.*, M.mName FROM CMT_SHOW C, C_MEMBER M WHERE c.mid = m.mid AND C.sId = 1 ORDER BY cSrdate;
 
-SELECT * FROM CMT_SHOW ORDER BY cZrdate;
+SELECT * FROM CMT_SHOW ORDER BY cSrdate;
+
+COMMIT;

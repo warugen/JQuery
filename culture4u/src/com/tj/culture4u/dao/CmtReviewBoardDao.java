@@ -12,18 +12,18 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.tj.culture4u.dto.CmtFreeBoardDto;
+import com.tj.culture4u.dto.CmtReviewBoardDto;
 
-public class CmtFreeBoardDao {
+public class CmtReviewBoardDao {
 	public static final int FAIL = 0;
 	public static final int SUCCESS = 1;
 	
-	private static CmtFreeBoardDao instance = new CmtFreeBoardDao();
-	public static CmtFreeBoardDao getInstance() {
+	private static CmtReviewBoardDao instance = new CmtReviewBoardDao();
+	public static CmtReviewBoardDao getInstance() {
 		return instance;
 	}
 	
-	private CmtFreeBoardDao() {}
+	private CmtReviewBoardDao() {}
 	private Connection getConnection() throws SQLException {
 		Connection conn = null;
 		try {
@@ -37,30 +37,30 @@ public class CmtFreeBoardDao {
 		return conn;
 	}
 	
-	// 해당 게시글의 댓글 목록 가져오기 (fId)
-	public ArrayList<CmtFreeBoardDto> cmtList(int fId) {
-		ArrayList<CmtFreeBoardDto> list = new ArrayList<CmtFreeBoardDto>();
+	// 해당 게시글의 댓글 목록 가져오기 (rId, cFrdate DESC, mId로 mName가져오기)
+	public ArrayList<CmtReviewBoardDto> cmtList(int rId) {
+		ArrayList<CmtReviewBoardDto> list = new ArrayList<CmtReviewBoardDto>();
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String sql = "SELECT C.*, M.mName FROM CMT_FREEBOARD C, C_MEMBER M WHERE c.mid = m.mid AND C.fId = ? ORDER BY cFrdate";
+		String sql = "SELECT C.*, M.mName FROM CMT_REVIEW C, C_MEMBER M WHERE c.mid = m.mid AND C.rId = ? ORDER BY cRrdate";
 		
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, fId);
+			pstmt.setInt(1, rId);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				int	   cFno = rs.getInt("cFno");
+				int	   cRno = rs.getInt("cRno");
 				String mId = rs.getString("mId");
 				String mName = rs.getString("mName"); // join해서 출력
-				String cFtext = rs.getString("cFtext");
-				Date   cFrdate = rs.getDate("cFrdate");
+				String cRtext = rs.getString("cRtext");
+				Date   cRrdate = rs.getDate("cFrdate");
 				
-				list.add(new CmtFreeBoardDto(cFno, mId, mName, fId, cFtext, cFrdate));
+				list.add(new CmtReviewBoardDto(cRno, mId, mName, rId, cRtext, cRrdate));
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -77,21 +77,21 @@ public class CmtFreeBoardDao {
 	}
 	
 	// 댓글 입력하기
-	public int cmtWrite(String mId, int fId, String cFtext) {
+	public int cmtWrite(String mId, int rId, String cRtext) {
 		int result = FAIL;
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
-		String sql = "INSERT INTO CMT_FREEBOARD (cFno, mId, fId, cFtext) " + 
-				"    VALUES(CMT_FREEBOARD_SEQ.nextval, ?, ?, ?)";
+		String sql = "INSERT INTO CMT_REVIEW (cRno, rId, mId, cRtext) " + 
+				"    VALUES(CMT_REVIEW_SEQ.nextval, ?, ?, ?)";
 		
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, mId);
-			pstmt.setInt(2, fId);
-			pstmt.setString(3, cFtext);
+			pstmt.setInt(2, rId);
+			pstmt.setString(3, cRtext);
 			
 			result = pstmt.executeUpdate();
 			System.out.println(result == SUCCESS ? "댓글쓰기 성공" : "댓글쓰기 실패");
@@ -110,26 +110,26 @@ public class CmtFreeBoardDao {
 	}
 	
 	// 수정할 댓글 가져오기??
-	public CmtFreeBoardDto getCmt() {
-		CmtFreeBoardDto cmt = null;
+	public CmtReviewBoardDto getCmt() {
+		CmtReviewBoardDto cmt = null;
 		
 		return cmt;
 	}
 	
 	
 	// 댓글 수정
-	public int cmtModify(int cFno, String cFtext) {
+	public int cmtModify(int cRno, String cRtext) {
 		int result = FAIL;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
-		String sql ="UPDATE CMT_FREEBOARD SET cFtext = ?, cFrdate = SYSDATE WHERE cFno = ? ";
+		String sql ="UPDATE CMT_FREEBOARD SET cRtext = ?, cRrdate = SYSDATE WHERE cRno = ? ";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, cFtext);
-			pstmt.setInt(2, cFno);
+			pstmt.setString(1, cRtext);
+			pstmt.setInt(2, cRno);
 			
 			result = pstmt.executeUpdate();
 			System.out.println(result == SUCCESS ? "댓글 수정 성공" : "댓글 수정 실패");
@@ -148,18 +148,18 @@ public class CmtFreeBoardDao {
 	
 	
 	// 댓글 삭제 (cFno)
-	public int cmtDelete(int cFno) {
+	public int cmtDelete(int cRno) {
 		int result = FAIL;
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
-		String sql = "DELETE FROM FREEBOARD WHERE FID = ?";
+		String sql = "DELETE FROM CMT_REVIEW WHERE cRno = ?";
 		
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, cFno);
+			pstmt.setInt(1, cRno);
 			
 			result = pstmt.executeUpdate();
 			System.out.println(result == SUCCESS ? "댓글 삭제 성공" : "댓글 삭제 실패");

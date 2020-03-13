@@ -57,6 +57,8 @@ SELECT * FROM (SELECT ROWNUM RN, A.* FROM
 -- 전체 회원 수
 SELECT COUNT(*) cnt FROM C_MEMBER;
 
+UPDATE C_MEMBER SET mLelvel = '9' WHERE mId='aaa';
+
 COMMIT;
 ------------------------------------------------------------------------------------
 -- 자유게시판
@@ -130,7 +132,7 @@ UPDATE FREEBOARD SET FTITLE = '제목수정',
                     FCONTENT = '본문수정',
                     FFILENAME = NULL,
                     FIP = '192.11.36.77',
-                    FRDATE = '20/03/01'
+                    FRDATE = SYSDATE
 WHERE FID=5;
 
 -- 글 삭제하기(FId로 삭제하기)
@@ -173,16 +175,19 @@ INSERT INTO CMT_FREEBOARD (cFno, mId, fId, cFtext)
 -- 댓글 삭제
 DELETE FROM CMT_FREEBOARD WHERE cFno = 1;
 
+-- 수정할 댓글 가져오기??
+SELECT * FROM CMT_FREEBOARD WHERE cFno = 1;
+
 -- 댓글 수정
 UPDATE CMT_FREEBOARD SET cFtext = '댓글수정', cFrdate = '20/03/01' WHERE cFno=1;
 
 -- 댓글 목록 (fId, cFrdate DESC)
-SELECT * FROM CMT_FREEBOARD WHERE fId = 1 ORDER BY cfrdate;
+SELECT * FROM CMT_FREEBOARD WHERE fId = 1 ORDER BY cFrdate;
 
 -- 댓글 목록 (fId, cFrdate DESC, mId로 mName가져오기)
-SELECT C.*, M.mName FROM CMT_FREEBOARD C, C_MEMBER M WHERE c.mid = m.mid AND C.fId = 1 ORDER BY cfrdate DESC;
+SELECT C.*, M.mName FROM CMT_FREEBOARD C, C_MEMBER M WHERE c.mid = m.mid AND C.fId = 1 ORDER BY cFrdate;
 
-SELECT * FROM CMT_FREEBOARD ORDER BY cfrdate DESC;
+SELECT * FROM CMT_FREEBOARD ORDER BY cFrdate DESC;
 
 ------------------------------------------------------------------------------------
 -- 후기게시판
@@ -240,7 +245,7 @@ INSERT INTO REVIEW_BOARD (rId, mId, rTitle, rContent, rFileName, rGroup, rStep, 
 -- 답변글 쓰기
 INSERT INTO REVIEW_BOARD (rId, mId, rTitle, rContent, rFileName, rGroup, rStep, rIndent, rIp)
     VALUES (REVIEW_BOARD_SEQ.NEXTVAL, 'aaa','reply','content', null, 1, 1, 1, '192.168.10.151');
-    
+        
 INSERT INTO REVIEW_BOARD (rId, mId, rTitle, rContent, rFileName, rGroup, rStep, rIndent, rIp)
     VALUES (REVIEW_BOARD_SEQ.NEXTVAL, 'ddd', '[답]가나다', '1111', null, 2, 0, 0, '127.0.0.1');
     
@@ -303,13 +308,13 @@ INSERT INTO CMT_REVIEW (cRno, rId, mId, cRtext)
 DELETE FROM CMT_REVIEW WHERE cRno = 1;
 
 -- 댓글 수정
-UPDATE CMT_FREEBOARD SET cRtext = '댓글수정', cRrdate = '20/03/01' WHERE cRno=1;
+UPDATE CMT_FREEBOARD SET cRtext = '댓글수정', cRrdate = SYSDATE WHERE cRno=1;
 
--- 댓글 목록 (fId, cFrdate DESC)
+-- 댓글 목록 (rId, cFrdate DESC)
 SELECT * FROM CMT_REVIEW WHERE rId = 1 ORDER BY cRrdate;
 
--- 댓글 목록 (fId, cFrdate DESC, mId로 mName가져오기)
-SELECT C.*, M.mName FROM CMT_REVIEW C, C_MEMBER M WHERE c.mid = m.mid AND C.rId = 1 ORDER BY cRrdate DESC;
+-- 댓글 목록 (rId, cFrdate DESC, mId로 mName가져오기)
+SELECT C.*, M.mName FROM CMT_REVIEW C, C_MEMBER M WHERE c.mid = m.mid AND C.rId = 1 ORDER BY cRrdate;
 
 SELECT * FROM CMT_REVIEW ORDER BY cRrdate;
 

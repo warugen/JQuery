@@ -12,21 +12,19 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.tj.culture4u.dto.FreeBoardDto;
+import com.tj.culture4u.dto.MagazineDto;
 
 
-public class FreeBoardDao {
-	public static final int EXISTENT = 0;
-	public static final int NONEXISTENT = 1;
+public class MagazineDao {
 	public static final int FAIL = 0;
 	public static final int SUCCESS = 1;
 	
-	private static FreeBoardDao instance = new FreeBoardDao();
-	public static FreeBoardDao getInstance() {
+	private static MagazineDao instance = new MagazineDao();
+	public static MagazineDao getInstance() {
 		return instance;
 	}
 	
-	private FreeBoardDao() {}
+	private MagazineDao() {}
 	private Connection getConnection() throws SQLException {
 		Connection conn = null;
 		try {
@@ -41,15 +39,15 @@ public class FreeBoardDao {
 	}
 	
 	// 글목록(startRow부터 endRow까지)
-	public ArrayList<FreeBoardDto> boardList(int startRow, int endRow){
-		ArrayList<FreeBoardDto> list = new ArrayList<FreeBoardDto>();
+	public ArrayList<MagazineDto> boardList(int startRow, int endRow){
+		ArrayList<MagazineDto> list = new ArrayList<MagazineDto>();
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String sql = "SELECT * FROM (SELECT ROWNUM RN, A.* " + 
-				"    FROM (SELECT F.* ,MNAME FROM FREEBOARD F, C_MEMBER M WHERE F.MID=M.MID ORDER BY FGROUP DESC, FSTEP) A) " + 
+		String sql = "SELECT * FROM (SELECT ROWNUM RN, A.*  " + 
+				"    FROM (SELECT * FROM MAGAZINE ORDER BY zRdate DESC) A) " + 
 				"WHERE RN BETWEEN ? AND ?";
 		
 		try {
@@ -60,20 +58,16 @@ public class FreeBoardDao {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				int fId = rs.getInt("fId");
-				String mId = rs.getString("mId");
-				String mName = rs.getString("mName"); // join해서 출력
-				String fTitle = rs.getString("fTitle");
-				String fContent = rs.getString("fContent");
-				String fFileName = rs.getString("fFileName");
-				Date   fRdate = rs.getDate("fRdate");
-				int    fHit = rs.getInt("fHit");
-				int    fGroup = rs.getInt("fGroup");
-				int    fStep = rs.getInt("fStep");
-				int    fIndent = rs.getInt("fIndent");
-				String fIp = rs.getString("fIp");
+				int zId = rs.getInt("zId");
+				String zTitle = rs.getString("zTitle");
+				String zContent = rs.getString("zContent");
+				String zFileName = rs.getString("zFileName");
+				Date   zRdate = rs.getDate("zRdate");
+				int    zHit = rs.getInt("zHit");
+				String zIp = rs.getString("zIp");
+				int zLike = rs.getInt("zLike");
 				
-				list.add(new FreeBoardDto(fId, mId, mName, fTitle, fContent, fFileName, fRdate, fHit, fGroup, fStep, fIndent, fIp));
+				list.add(new MagazineDto(zId, zTitle, zContent, zFileName, zRdate, zHit, zIp, zLike));
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -91,14 +85,14 @@ public class FreeBoardDao {
 	}
 	
 	// 글갯수 가져오기
-	public int getBoardTotCnt() {
+	public int getTotCnt() {
 		int totCnt = 0;
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String sql = "SELECT COUNT(*) FROM FREEBOARD";
+		String sql = "SELECT COUNT(*) FROM MAGAZINE";
 		
 		try {
 			conn = getConnection();
@@ -123,27 +117,26 @@ public class FreeBoardDao {
 		return totCnt;
 	}
 	
-	// 글쓰기(원글) (fId, mId, fTitle, fContent, fFileName, fGroup, fIp)
-	public int write(String mId, String fTitle, String fContent, String fFileName, String fIp) {
+	// 글쓰기(원글) (zId, zTitle, zContent, zFileName, zIp)
+	public int write(String zTitle, String zContent, String zFileName, String zIp) {
 		int result = FAIL;
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
-		String sql = "INSERT INTO FREEBOARD (fId, mId, fTitle, fContent, fFileName, fGroup, fIp) " + 
-				"    VALUES (FREEBOARD_SEQ.NEXTVAL, ?, ?, ?, ?, FREEBOARD_SEQ.CURRVAL, ?)";
+		String sql = "INSERT INTO MAGAZINE (zId, zTitle, zContent, zFileName, zIp) " + 
+				"    VALUES (MAGAZINE_SEQ.NEXTVAL, ?, ?, ?, ?)";
 		
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, mId);
-			pstmt.setString(2, fTitle);
-			pstmt.setString(3, fContent);
-			pstmt.setString(4, fFileName);
-			pstmt.setString(5, fIp);
+			pstmt.setString(1, zTitle);
+			pstmt.setString(2, zContent);
+			pstmt.setString(3, zFileName);
+			pstmt.setString(4, zIp);
 			
 			result = pstmt.executeUpdate();
-			System.out.println(result == SUCCESS ? "원글쓰기 성공" : "원글쓰기 실패");
+			System.out.println(result == SUCCESS ? "매거진글 쓰기 성공" : "매거진글 쓰기 실패");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
@@ -159,18 +152,18 @@ public class FreeBoardDao {
 	}
 	
 	// FHit 하나 올리기(1번글 조회수 하나 올리기)
-	public void hitUp(int fId) {
+	public void hitUp(int zId) {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
-		String sql = "UPDATE FREEBOARD SET fHit = fHit + 1 " + 
-						"WHERE fId = ?";
+		String sql = "UPDATE MAGAZINE SET zHit = zHit + 1 " + 
+				"WHERE zId = ?";
 		
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, fId);
+			pstmt.setInt(1, zId);
 			int result = pstmt.executeUpdate();
 			
 			System.out.println(result == SUCCESS ? "조회수 올리기 성공" : "조회수 올리기 실패");
@@ -187,39 +180,35 @@ public class FreeBoardDao {
 		
 	}
 	
-	// FId로 글 dto보기
-	public FreeBoardDto contentView(int fId) {
+	// zId로 글 dto보기
+	public MagazineDto contentView(int zId) {
 		
 		// 글 조회수 1 올리기 호출
-		hitUp(fId);
+		hitUp(zId);
 		
-		FreeBoardDto dto = null;
+		MagazineDto dto = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String sql = "SELECT F.*, MNAME FROM FREEBOARD F, C_MEMBER M WHERE M.MID=F.MID AND FID = ?";
+		String sql = "SELECT * FROM MAGAZINE WHERE zId = ?";
 		
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, fId);
+			pstmt.setInt(1, zId);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				String mId = rs.getString("mId");
-				String mName = rs.getString("mName"); // join해서 출력
-				String fTitle = rs.getString("fTitle");
-				String fContent = rs.getString("fContent");
-				String fFileName = rs.getString("fFileName");
-				Date   fRdate = rs.getDate("fRdate");
-				int    fHit = rs.getInt("fHit");
-				int    fGroup = rs.getInt("fGroup");
-				int    fStep = rs.getInt("fStep");
-				int    fIndent = rs.getInt("fIndent");
-				String fIp = rs.getString("fIp");
+				String zTitle = rs.getString("zTitle");
+				String zContent = rs.getString("zContent");
+				String zFileName = rs.getString("zFileName");
+				Date   zRdate = rs.getDate("zRdate");
+				int    zHit = rs.getInt("zHit");
+				String zIp = rs.getString("zIp");
+				int zLike = rs.getInt("zLike");
 				
-				dto = new FreeBoardDto(fId, mId, mName, fTitle, fContent, fFileName, fRdate, fHit, fGroup, fStep, fIndent, fIp);
+				dto = new MagazineDto(zId, zTitle, zContent, zFileName, zRdate, zHit, zIp, zLike);
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -236,36 +225,32 @@ public class FreeBoardDao {
 		return dto;
 	}
 	
-	// 글수정 (원글수정과 답변쓸때 호출)
-	public FreeBoardDto modifyView_replyView(int fId) {
+	// 글수정화면 보이기 (원글수정 호출)
+	public MagazineDto modifyView(int zId) {
 		// 해당 fid로 글수정할 dto 가져오기 조회수1up은 안한다.
-		FreeBoardDto dto = null;
+		MagazineDto dto = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String sql = "SELECT F.*, MNAME FROM FREEBOARD F, C_MEMBER M WHERE M.MID=F.MID AND FID = ?";
+		String sql = "SELECT * FROM MAGAZINE WHERE zId = ?";
 		
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, fId);
+			pstmt.setInt(1, zId);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				String mId = rs.getString("mId");
-				String mName = rs.getString("mName"); // join해서 출력
-				String fTitle = rs.getString("fTitle");
-				String fContent = rs.getString("fContent");
-				String fFileName = rs.getString("fFileName");
-				Date   fRdate = rs.getDate("fRdate");
-				int    fHit = rs.getInt("fHit");
-				int    fGroup = rs.getInt("fGroup");
-				int    fStep = rs.getInt("fStep");
-				int    fIndent = rs.getInt("fIndent");
-				String fIp = rs.getString("fIp");
+				String zTitle = rs.getString("zTitle");
+				String zContent = rs.getString("zContent");
+				String zFileName = rs.getString("zFileName");
+				Date   zRdate = rs.getDate("zRdate");
+				int    zHit = rs.getInt("zHit");
+				String zIp = rs.getString("zIp");
+				int zLike = rs.getInt("zLike");
 				
-				dto = new FreeBoardDto(fId, mId, mName, fTitle, fContent, fFileName, fRdate, fHit, fGroup, fStep, fIndent, fIp);
+				dto = new MagazineDto(zId, zTitle, zContent, zFileName, zRdate, zHit, zIp, zLike);
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -283,31 +268,31 @@ public class FreeBoardDao {
 	}
 	
 	
-	// 글 수정하기 (FId, FTitle, FContent, FILENAME,  FIp, FRDATE)
-	public int modify(int fId, String fTitle, String fContent, String fFileName, String fIp) {
+	// 글 수정하기 (zId, zTitle, zContent, zFileName,  zIp, rRdate)
+	public int modify(int zId, String zTitle, String zContent, String zFileName, String zIp) {
 		int result = FAIL;
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
-		String sql ="UPDATE FREEBOARD SET FTITLE = ?, " + 
-				"                    FCONTENT = ?, " + 
-				"                    FFILENAME = ?, " + 
-				"                    FIP = ?, " + 
-				"                    FRDATE = SYSDATE " + 
-				"WHERE FID = ?";
+		String sql ="UPDATE MAGAZINE SET zTitle = ?, " + 
+				"                    zContent = ?, " + 
+				"                    zFileName = ?, " + 
+				"                    zRdate = SYSDATE, " +
+				"                    zIp = ? " + 
+				"WHERE zId = ?";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, fTitle);
-			pstmt.setString(2, fContent);
-			pstmt.setString(3, fFileName);
-			pstmt.setString(4, fIp);
-			pstmt.setInt(5, fId);
+			pstmt.setString(1, zTitle);
+			pstmt.setString(2, zContent);
+			pstmt.setString(3, zFileName);
+			pstmt.setString(4, zIp);
+			pstmt.setInt(5, zId);
 			
 			result = pstmt.executeUpdate();
-			System.out.println(result == SUCCESS ? "글 수정 성공" : "글 수정 실패");
+			System.out.println(result == SUCCESS ? "매거진글 수정 성공" : "매거진글 수정 실패");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
@@ -323,21 +308,21 @@ public class FreeBoardDao {
 	}
 	
 	// 글 삭제하기(FId로 삭제하기)
-	public int delete(int fId) {
+	public int delete(int zId) {
 		int result = FAIL;
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
-		String sql = "DELETE FROM FREEBOARD WHERE FID = ?";
+		String sql = "DELETE FROM MAGAZINE WHERE zId = ?";
 		
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, fId);
+			pstmt.setInt(1, zId);
 			
 			result = pstmt.executeUpdate();
-			System.out.println(result == SUCCESS ? "글 삭제 성공" : "글 삭제 실패");
+			System.out.println(result == SUCCESS ? "매거진글 삭제 성공" : "매거진글 삭제 실패");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
@@ -352,62 +337,25 @@ public class FreeBoardDao {
 		return result;
 	}
 	
-	// 답변글 추가전 STEP a 수행
-	public void preReplyStepA(int fGroup, int fStep) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		String sql = "UPDATE FREEBOARD SET FSTEP = FSTEP + 1 WHERE FGROUP = ? AND FSTEP > ?";
-
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, fGroup);
-			pstmt.setInt(2, fStep);
-			int result = pstmt.executeUpdate();
-			
-			System.out.println(result == SUCCESS ? "답변글 step A 성공" : "답변글 step A 실패");
-		} catch (Exception e) {
-			System.out.println("전처리 : "+e.getMessage());
-		} finally {
-			try {
-				if(pstmt!=null) pstmt.close();
-				if(conn!=null) conn.close();
-			} catch (Exception e2) {
-				System.out.println(e2.getMessage());
-			}
-		}
-	}
-	
-	// 답변글 쓰기
-	public int reply(String mId, String fTitle, String fContent, String fFileName, int fGroup, int fStep, int fIndent, String fIp) {
-		// stepA 실행
-		preReplyStepA(fGroup, fStep);
-		
+	// 좋아요 눌렀으면 좋아요숫자 더하기
+	public int likePlus(int zId) {
 		int result = FAIL;
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
-		String sql = "INSERT INTO FREEBOARD (FID, MID, FTITLE, FCONTENT, FFILENAME, FGROUP, FSTEP, FINDENT, FIP) " + 
-				"    VALUES (FREEBOARD_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "UPDATE MAGAZINE SET zLike = zLike + 1 " + 
+				"WHERE zId = ?";
 		
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, mId);
-			pstmt.setString(2, fTitle);
-			pstmt.setString(3, fContent);
-			pstmt.setString(4, fFileName);
-			pstmt.setInt(5, fGroup);
-			pstmt.setInt(6, fStep + 1);
-			pstmt.setInt(7, fIndent + 1);
-			pstmt.setString(8, fIp);
-			System.out.println();
-			result = pstmt.executeUpdate();
+			pstmt.setInt(1, zId);
 			
-			System.out.println(result == SUCCESS ? "답변쓰기 성공" : "답변쓰기 실패");
+			result = pstmt.executeUpdate();
+			System.out.println(result == SUCCESS ? "좋아요 더하기 성공" : "좋아요 더하기 실패");
 		} catch (Exception e) {
-			System.out.println("답글달다 예외 "+e.getMessage());
+			System.out.println(e.getMessage());
 		} finally {
 			try {
 				if(pstmt!=null) pstmt.close();
@@ -416,9 +364,73 @@ public class FreeBoardDao {
 				System.out.println(e2.getMessage());
 			}
 		}
-		
+
 		return result;
 	}
 	
+	// 좋아요 눌렀으면 좋아요숫자 빼기
+	public int likeMinus(int zId) {
+		int result = FAIL;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		String sql = "UPDATE MAGAZINE SET zLike = zLike - 1\r\n" + 
+				"WHERE zId = 1";
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, zId);
+			
+			result = pstmt.executeUpdate();
+			System.out.println(result == SUCCESS ? "좋아요 빼기 성공" : "좋아요 빼기 실패");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if(pstmt!=null) pstmt.close();
+				if(conn!=null) conn.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+
+		return result;
+	}
+	
+	// 좋아요 숫자 가져오기(zId)
+	public int getLikeCnt(int zId) {
+		int totCnt = 0;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = "SELECT * FROM MAGAZINE WHERE zId = ?";
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				totCnt = rs.getInt("zLike");
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if(rs!=null) rs.close();
+				if(pstmt!=null) pstmt.close();
+				if(conn!=null) conn.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+		
+		return totCnt;
+	}
+		
 	// 글 검색하기 추가??
 }
