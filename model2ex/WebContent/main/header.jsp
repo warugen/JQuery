@@ -11,11 +11,11 @@
 <style>
 *{padding:0; margin: 0;}
 header { 
-	background-color: #ffffaa; font-size: 10pt;
+	background-color: #eaeaea; font-size: 10pt;
 }
 header a {text-decoration: none; font-weight: bold;}
 header li { list-style: none;}
-header .gnb{width: 100%;	background-color: #003300;}
+header .gnb{width: 100%;	background-color: #1b3440;}
 header .gnb ul {
 	overflow: hidden;
 	width:700px;
@@ -25,7 +25,7 @@ header .gnb ul {
 }
 header .gnb ul li {	float: right;	margin-right: 30px;}
 header .gnb a { 
-	color : #ffffaa;
+	color : #eaeaea;
 	font-size: 0.9em;
 	display: block;
 	padding-left:15px;

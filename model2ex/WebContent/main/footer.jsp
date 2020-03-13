@@ -9,8 +9,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <style>
-	body { background-color: #ffffaa; }
-	footer {height:80px;background-color: #003300;}
+	body { background-color: #EAEAEA; }
+	footer {height:80px;background-color: #1b3440;}
 	footer #footer_conts, footer #footer_conts a {
 		color:white;
 		font-weight: blod;
