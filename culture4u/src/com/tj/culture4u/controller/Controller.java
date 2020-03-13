@@ -40,7 +40,16 @@ public class Controller extends HttpServlet {
 		String viewPage = null;
 		Service service = null;
 		
-		if(command.equals("/adminloginView.do")) {
+		/*********************************************************************
+		 * 
+		 * 							관리자(admin) 
+		 * 
+		 * *******************************************************************/
+		if (command.equals("/main.do")) {
+			// 메인화면 호출
+			viewPage = "/main/main.jsp";
+			
+		} else if (command.equals("/adminloginView.do")) {
 			// 관리자 로그인 페이지 호출
 			
 			viewPage = "/admin/adminLogin.jsp";
@@ -51,6 +60,48 @@ public class Controller extends HttpServlet {
 			service.execute(request, response);
 			viewPage = "/allView.do";
 			
+		} else if (command.equals("")) {
+			viewPage = "";
+		} else if (command.equals("")) {
+			viewPage = "";
+		} else if (command.equals("")) {
+			viewPage = "";
+		} else if (command.equals("")) {
+			viewPage = "";
+		} else if (command.equals("")) {
+			viewPage = "";
+		} else if (command.equals("")) {
+			viewPage = "";
+		} else if (command.equals("")) {
+			viewPage = "";
+		} else if (command.equals("")) {
+			viewPage = "";
+		} else if (command.equals("")) {
+			viewPage = "";
+		} else if (command.equals("")) {
+			viewPage = "";
+		} else if (command.equals("")) {
+			viewPage = "";
+		} else if (command.equals("")) {
+			viewPage = "";
+		} else if (command.equals("")) {
+			viewPage = "";
+		} else if (command.equals("")) {
+			viewPage = "";
+		} else if (command.equals("")) {
+			viewPage = "";
+		} else if (command.equals("")) {
+			viewPage = "";
+		} else if (command.equals("")) {
+			viewPage = "";
+		} else if (command.equals("")) {
+			viewPage = "";
+		} else if (command.equals("")) {
+			viewPage = "";
+		} else if (command.equals("")) {
+			viewPage = "";
+		} else if (command.equals("")) {
+			viewPage = "";
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
