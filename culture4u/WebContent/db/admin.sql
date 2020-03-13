@@ -29,8 +29,8 @@ CREATE TABLE NOTICE (
 	nTitle    VARCHAR2(100)  NOT NULL,              -- 글제목
 	nContent  VARCHAR2(4000) NOT NULL,              -- 글본문
 	nFileName VARCHAR(100)   NULL,                  -- 첨부파일이름
-	fRdate    DATE DEFAULT SYSDATE,       -- 작성일
-	fHit      NUMBER(6)      DEFAULT 0              -- 조회수
+	nRdate    DATE DEFAULT SYSDATE,       -- 작성일
+	nHit      NUMBER(6)      DEFAULT 0              -- 조회수
 );
 
 -- 공지사항 글 쓰기
@@ -40,7 +40,7 @@ INSERT INTO NOTICE (nId, aId, nTitle, nContent, nFileName )
 SELECT * FROM NOTICE;
 
 -- 공지사항 조회수 올리기
-UPDATE NOTICE SET fHit = fHit + 1
+UPDATE NOTICE SET nHit = nHit + 1
 WHERE nId = 1;
 
 
@@ -55,7 +55,7 @@ DELETE FROM NOTICE WHERE fId = '6';
 
 -- 공지사항 글 가져오기 (STARTROW, ENDROW)
 SELECT * FROM (SELECT ROWNUM RN, A.* 
-    FROM (SELECT * FROM NOTICE ORDER BY fRdate DESC) A)
+    FROM (SELECT * FROM NOTICE ORDER BY nRdate DESC) A)
 WHERE RN BETWEEN 1 AND 9;
 
 -- 공지사항 글 갯수

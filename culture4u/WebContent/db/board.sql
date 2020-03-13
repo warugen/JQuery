@@ -60,7 +60,7 @@ SELECT * FROM MAGAZINE WHERE zId = 1;
 UPDATE MAGAZINE SET zTitle = '제목수정',
                     zContent = '본문수정',
                     zFileName = NULL,
-                    zRdate = '20/03/01'
+                    zRdate = SYSDATE
 WHERE zId=1;
 
 -- 글 삭제하기(FId로 삭제하기)
@@ -103,7 +103,7 @@ SELECT * FROM CMT_MAGAZINE;
     
 
 -- 댓글 수정
-UPDATE CMT_MAGAZINE SET cZtext = '제목수정', cZrdate = '20/03/01' WHERE cZno=1;
+UPDATE CMT_MAGAZINE SET cZtext = '제목수정', cZrdate = SYSDATE WHERE cZno=1;
 
 -- 댓글 삭제
 DELETE FROM CMT_MAGAZINE WHERE cZno = 1;
@@ -147,7 +147,7 @@ SELECT * FROM MLIKE GROUP BY mId;
 DELETE FROM MLIKE WHERE zId = 1 AND mId = 'aaa';
 
 -- 해당 id로 스크랩한것 가져오기(목록 가져오기)
-SELECT L.*, M.* FROM MLIKE L, MAGAZINE M  WHERE L.zId = M.zId AND mId = 'aaa' ORDER BY  mLid;
+SELECT L.*, M.* FROM MLIKE L, MAGAZINE M  WHERE L.zId = M.zId AND mId = 'aaa' ORDER BY mLid;
 
 
 ------------------------------------------------------------------------------------
@@ -221,7 +221,7 @@ SELECT COUNT(*) FROM MONTHLY_SHOW WHERE sStartDate >= TRUNC(TO_DATE('20/03', 'YY
 -- sId로 글 dto보기
 SELECT * FROM MONTHLY_SHOW WHERE sId = 1;
 
--- 글 수정하기(sId, zTitle, zContent, zFileName,  sIp, rRdate)
+-- 글 수정하기(sId, sTitle, sContent, sStartDate, sEndDate, sPlace, sIp, sRdate)
 UPDATE MONTHLY_SHOW SET sTitle = '제목수정',
                     sContent = '본문수정',
                     sStartDate = '20/06/01',
@@ -231,8 +231,10 @@ UPDATE MONTHLY_SHOW SET sTitle = '제목수정',
                     sIp = '192.168.2.44'
 WHERE sId=1;
 
--- 글 삭제하기(FId로 삭제하기)
+-- 글 삭제하기(sId로 삭제하기)
 DELETE FROM MONTHLY_SHOW WHERE sId = 6;
+
+SELECT * FROM MONTHLY_SHOW;
 
 ------------------------------------------------------------------------------------
 -- 월간공연 댓글

@@ -12,18 +12,21 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.tj.culture4u.dto.MagazineDto;
+import com.tj.culture4u.dto.NoticeDto;
 
-public class MagazineDao {
+
+public class NoticeDao {
+	public static final int EXISTENT = 0;
+	public static final int NONEXISTENT = 1;
 	public static final int FAIL = 0;
 	public static final int SUCCESS = 1;
 	
-	private static MagazineDao instance = new MagazineDao();
-	public static MagazineDao getInstance() {
+	private static NoticeDao instance = new NoticeDao();
+	public static NoticeDao getInstance() {
 		return instance;
 	}
 	
-	private MagazineDao() {}
+	private NoticeDao() {}
 	private Connection getConnection() throws SQLException {
 		Connection conn = null;
 		try {
@@ -38,16 +41,16 @@ public class MagazineDao {
 	}
 	
 	// 글목록(startRow부터 endRow까지)
-	public ArrayList<MagazineDto> boardList(int startRow, int endRow){
-		ArrayList<MagazineDto> list = new ArrayList<MagazineDto>();
+	public ArrayList<NoticeDto> boardList(int startRow, int endRow){
+		ArrayList<NoticeDto> list = new ArrayList<NoticeDto>();
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		String sql = "SELECT * FROM (SELECT ROWNUM RN, A.*  " + 
-				"    FROM (SELECT * FROM MAGAZINE ORDER BY zRdate DESC) A) " + 
-				"WHERE RN BETWEEN ? AND ?";
+				"    FROM (SELECT * FROM NOTICE ORDER BY nRdate DESC) A)  " + 
+				" WHERE RN BETWEEN ? AND ?";
 		
 		try {
 			conn = getConnection();
@@ -57,16 +60,15 @@ public class MagazineDao {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				int zId = rs.getInt("zId");
-				String zTitle = rs.getString("zTitle");
-				String zContent = rs.getString("zContent");
-				String zFileName = rs.getString("zFileName");
-				Date   zRdate = rs.getDate("zRdate");
-				int    zHit = rs.getInt("zHit");
-				String zIp = rs.getString("zIp");
-				int zLike = rs.getInt("zLike");
+				int nId = rs.getInt("nId"); 
+				String aId = rs.getString("aId");
+				String nTitle = rs.getString("nTitle"); 
+				String nContent = rs.getString("nContent");
+				String nFileName = rs.getString("nFileName");
+				Date nRdate = rs.getDate("nRdate");
+				int nHit = rs.getInt("nHit");
 				
-				list.add(new MagazineDto(zId, zTitle, zContent, zFileName, zRdate, zHit, zIp, zLike));
+				list.add(new NoticeDto(nId, aId, nTitle, nContent, nFileName, nRdate, nHit));
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -84,14 +86,14 @@ public class MagazineDao {
 	}
 	
 	// 글갯수 가져오기
-	public int getTotCnt() {
+	public int getBoardTotCnt() {
 		int totCnt = 0;
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String sql = "SELECT COUNT(*) FROM MAGAZINE";
+		String sql = "SELECT COUNT(*) FROM NOTICE";
 		
 		try {
 			conn = getConnection();
@@ -116,26 +118,26 @@ public class MagazineDao {
 		return totCnt;
 	}
 	
-	// 글쓰기(원글) (zId, zTitle, zContent, zFileName, zIp)
-	public int write(String zTitle, String zContent, String zFileName, String zIp) {
+	// 공지글쓰기(원글) (nId, aId, nTitle, nContent, nFileName)
+	public int write(String aId, String nTitle, String nContent, String nFileName) {
 		int result = FAIL;
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
-		String sql = "INSERT INTO MAGAZINE (zId, zTitle, zContent, zFileName, zIp) " + 
-				"    VALUES (MAGAZINE_SEQ.NEXTVAL, ?, ?, ?, ?)";
+		String sql = "INSERT INTO NOTICE (nId, aId, nTitle, nContent, nFileName ) " + 
+				"    VALUES (NOTICE_SEQ.NEXTVAL, ? ,? ,?, ?)";
 		
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, zTitle);
-			pstmt.setString(2, zContent);
-			pstmt.setString(3, zFileName);
-			pstmt.setString(4, zIp);
+			pstmt.setString(1, aId);
+			pstmt.setString(2, nTitle);
+			pstmt.setString(3, nContent);
+			pstmt.setString(4, nFileName);
 			
 			result = pstmt.executeUpdate();
-			System.out.println(result == SUCCESS ? "매거진글 쓰기 성공" : "매거진글 쓰기 실패");
+			System.out.println(result == SUCCESS ? "공지글쓰기 성공" : "공지글쓰기 실패");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
@@ -151,18 +153,18 @@ public class MagazineDao {
 	}
 	
 	// FHit 하나 올리기(1번글 조회수 하나 올리기)
-	public void hitUp(int zId) {
+	public void hitUp(int nId) {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
-		String sql = "UPDATE MAGAZINE SET zHit = zHit + 1 " + 
-				"WHERE zId = ?";
+		String sql = "UPDATE NOTICE SET nHit = nHit + 1 " +
+						"WHERE nId = ?";
 		
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, zId);
+			pstmt.setInt(1, nId);
 			int result = pstmt.executeUpdate();
 			
 			System.out.println(result == SUCCESS ? "조회수 올리기 성공" : "조회수 올리기 실패");
@@ -176,38 +178,36 @@ public class MagazineDao {
 				System.out.println(e2.getMessage());
 			}
 		}
-		
 	}
 	
-	// zId로 글 dto보기
-	public MagazineDto contentView(int zId) {
+	// nId로 글 dto보기
+	public NoticeDto contentView(int nId) {
 		
 		// 글 조회수 1 올리기 호출
-		hitUp(zId);
+		hitUp(nId);
 		
-		MagazineDto dto = null;
+		NoticeDto dto = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String sql = "SELECT * FROM MAGAZINE WHERE zId = ?";
+		String sql = "SELECT * FROM NOTICE WHERE nId = ?";
 		
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, zId);
+			pstmt.setInt(1, nId);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				String zTitle = rs.getString("zTitle");
-				String zContent = rs.getString("zContent");
-				String zFileName = rs.getString("zFileName");
-				Date   zRdate = rs.getDate("zRdate");
-				int    zHit = rs.getInt("zHit");
-				String zIp = rs.getString("zIp");
-				int zLike = rs.getInt("zLike");
+				String aId = rs.getString("aId");
+				String nTitle = rs.getString("nTitle");
+				String nContent = rs.getString("nContent");
+				String nFileName = rs.getString("nFileName");
+				Date   nRdate = rs.getDate("nRdate");
+				int    nHit = rs.getInt("nHit");
 				
-				dto = new MagazineDto(zId, zTitle, zContent, zFileName, zRdate, zHit, zIp, zLike);
+				dto = new NoticeDto(nId, aId, nTitle, nContent, nFileName, nRdate, nHit);
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -224,32 +224,31 @@ public class MagazineDao {
 		return dto;
 	}
 	
-	// 글수정화면 보이기 (원글수정 호출)
-	public MagazineDto modifyView(int zId) {
+	// 글수정 (원글수정쓸때 호출)
+	public NoticeDto modifyView(int nId) {
 		// 해당 fid로 글수정할 dto 가져오기 조회수1up은 안한다.
-		MagazineDto dto = null;
+		NoticeDto dto = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String sql = "SELECT * FROM MAGAZINE WHERE zId = ?";
+		String sql = "SELECT * FROM NOTICE WHERE nId = ?";
 		
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, zId);
+			pstmt.setInt(1, nId);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				String zTitle = rs.getString("zTitle");
-				String zContent = rs.getString("zContent");
-				String zFileName = rs.getString("zFileName");
-				Date   zRdate = rs.getDate("zRdate");
-				int    zHit = rs.getInt("zHit");
-				String zIp = rs.getString("zIp");
-				int zLike = rs.getInt("zLike");
+				String aId = rs.getString("aId");
+				String nTitle = rs.getString("nTitle");
+				String nContent = rs.getString("nContent");
+				String nFileName = rs.getString("nFileName");
+				Date   nRdate = rs.getDate("nRdate");
+				int    nHit = rs.getInt("nHit");
 				
-				dto = new MagazineDto(zId, zTitle, zContent, zFileName, zRdate, zHit, zIp, zLike);
+				dto = new NoticeDto(nId, aId, nTitle, nContent, nFileName, nRdate, nHit);
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -266,32 +265,29 @@ public class MagazineDao {
 		return dto;
 	}
 	
-	
-	// 글 수정하기 (zId, zTitle, zContent, zFileName,  zIp, rRdate)
-	public int modify(int zId, String zTitle, String zContent, String zFileName, String zIp) {
+	// 글 수정하기 (nId, nTitle, nContent, nFILENAME,  nIp, )
+	public int modify(int nId, String nTitle, String nContent, String nFileName) {
 		int result = FAIL;
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
-		String sql ="UPDATE MAGAZINE SET zTitle = ?, " + 
-				"                    zContent = ?, " + 
-				"                    zFileName = ?, " + 
-				"                    zRdate = SYSDATE, " +
-				"                    zIp = ? " + 
-				"WHERE zId = ?";
+		String sql ="UPDATE NOTICE SET nTitle = ?, " + 
+				"                    nContent = ?, " + 
+				"                    nFileName = ?, " + 
+				"                    nRdate = SYSDATE " + 
+				"WHERE nId = ?";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, zTitle);
-			pstmt.setString(2, zContent);
-			pstmt.setString(3, zFileName);
-			pstmt.setString(4, zIp);
-			pstmt.setInt(5, zId);
+			pstmt.setString(1, nTitle);
+			pstmt.setString(2, nContent);
+			pstmt.setString(3, nFileName);
+			pstmt.setInt(4, nId);
 			
 			result = pstmt.executeUpdate();
-			System.out.println(result == SUCCESS ? "매거진글 수정 성공" : "매거진글 수정 실패");
+			System.out.println(result == SUCCESS ? "글 수정 성공" : "글 수정 실패");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
@@ -307,21 +303,21 @@ public class MagazineDao {
 	}
 	
 	// 글 삭제하기(FId로 삭제하기)
-	public int delete(int zId) {
+	public int delete(int nId) {
 		int result = FAIL;
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
-		String sql = "DELETE FROM MAGAZINE WHERE zId = ?";
+		String sql = "DELETE FROM NOTICE WHERE nId = ?";
 		
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, zId);
+			pstmt.setInt(1, nId);
 			
 			result = pstmt.executeUpdate();
-			System.out.println(result == SUCCESS ? "매거진글 삭제 성공" : "매거진글 삭제 실패");
+			System.out.println(result == SUCCESS ? "글 삭제 성공" : "글 삭제 실패");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
@@ -336,56 +332,65 @@ public class MagazineDao {
 		return result;
 	}
 	
-	// 좋아요 눌렀으면 좋아요숫자 더하기
-	public int likePlus(int zId) {
-		int result = FAIL;
-		
+	/**
+	 * 공지사항은 답변글 달 수 없다.
+	 * 
+	// 답변글 추가전 STEP a 수행
+	public void preReplyStepA(int fGroup, int fStep) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		
-		String sql = "UPDATE MAGAZINE SET zLike = zLike + 1 " + 
-				"WHERE zId = ?";
-		
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, zId);
-			
-			result = pstmt.executeUpdate();
-			System.out.println(result == SUCCESS ? "좋아요 더하기 성공" : "좋아요 더하기 실패");
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		} finally {
-			try {
-				if(pstmt!=null) pstmt.close();
-				if(conn!=null) conn.close();
-			} catch (Exception e2) {
-				System.out.println(e2.getMessage());
-			}
-		}
+		String sql = "UPDATE FREEBOARD SET FSTEP = FSTEP + 1 WHERE FGROUP = ? AND FSTEP > ?";
 
-		return result;
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, fGroup);
+			pstmt.setInt(2, fStep);
+			int result = pstmt.executeUpdate();
+			
+			System.out.println(result == SUCCESS ? "답변글 step A 성공" : "답변글 step A 실패");
+		} catch (Exception e) {
+			System.out.println("전처리 : "+e.getMessage());
+		} finally {
+			try {
+				if(pstmt!=null) pstmt.close();
+				if(conn!=null) conn.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
 	}
 	
-	// 좋아요 눌렀으면 좋아요숫자 빼기
-	public int likeMinus(int zId) {
+	// 답변글 쓰기
+	public int reply(String mId, String fTitle, String fContent, String fFileName, int fGroup, int fStep, int fIndent, String fIp) {
+		// stepA 실행
+		preReplyStepA(fGroup, fStep);
+		
 		int result = FAIL;
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
-		String sql = "UPDATE MAGAZINE SET zLike = zLike - 1\r\n" + 
-				"WHERE zId = 1";
+		String sql = "INSERT INTO FREEBOARD (FID, MID, FTITLE, FCONTENT, FFILENAME, FGROUP, FSTEP, FINDENT, FIP) " + 
+				"    VALUES (FREEBOARD_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, zId);
-			
+			pstmt.setString(1, mId);
+			pstmt.setString(2, fTitle);
+			pstmt.setString(3, fContent);
+			pstmt.setString(4, fFileName);
+			pstmt.setInt(5, fGroup);
+			pstmt.setInt(6, fStep + 1);
+			pstmt.setInt(7, fIndent + 1);
+			pstmt.setString(8, fIp);
+			System.out.println();
 			result = pstmt.executeUpdate();
-			System.out.println(result == SUCCESS ? "좋아요 빼기 성공" : "좋아요 빼기 실패");
+			
+			System.out.println(result == SUCCESS ? "답변쓰기 성공" : "답변쓰기 실패");
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("답글달다 예외 "+e.getMessage());
 		} finally {
 			try {
 				if(pstmt!=null) pstmt.close();
@@ -394,42 +399,10 @@ public class MagazineDao {
 				System.out.println(e2.getMessage());
 			}
 		}
-
+		
 		return result;
 	}
+	*/
 	
-	// 좋아요 숫자 가져오기(zId)
-	public int getLikeCnt(int zId) {
-		int totCnt = 0;
-		
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		
-		String sql = "SELECT * FROM MAGAZINE WHERE zId = ?";
-		
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
-				totCnt = rs.getInt("zLike");
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		} finally {
-			try {
-				if(rs!=null) rs.close();
-				if(pstmt!=null) pstmt.close();
-				if(conn!=null) conn.close();
-			} catch (Exception e2) {
-				System.out.println(e2.getMessage());
-			}
-		}
-		
-		return totCnt;
-	}
-		
 	// 글 검색하기 추가??
 }
