@@ -19,6 +19,7 @@ import com.tj.ex.service.BReplyService;
 import com.tj.ex.service.BReplyViewService;
 import com.tj.ex.service.BWriteService;
 import com.tj.ex.service.MAllViewService;
+import com.tj.ex.service.MImgUpload;
 import com.tj.ex.service.MJoinSerivce;
 import com.tj.ex.service.MLoginService;
 import com.tj.ex.service.MModifyService;
@@ -79,7 +80,13 @@ public class MController extends HttpServlet {
 			service = new MidConfirmService();
 			service.execute(request, response);
 			viewPage = "/member/idConfirm.jsp";
-			
+			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		} else if (command.equals("/imgUp.do")) {
+			// 이미지업로드하기 MImgUpload.java
+			service = new MImgUpload();
+			service.execute(request, response);
+			viewPage = "/fileboard/imgUp.jsp";
+			///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		} else if (command.equals("/join.do")) {
 			// 회원가입 처리 MJoinSerivce.java
 			service = new MJoinSerivce();

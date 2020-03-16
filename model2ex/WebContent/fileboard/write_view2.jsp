@@ -31,10 +31,45 @@
 			minHeight : 350,
 			maxHeight : null,
 			focus : true,
-			lang : 'ko-KR'
+			lang: "ko-KR",
+			callbacks: {	//여기 부분이 이미지를 첨부하는 부분
+				onImageUpload : function(files) {
+					console.log(files);
+					uploadSummernoteImageFile(files[0],this);
+				}
+			}
 		});
 	});
-	$('.dropdown-toggle').dropdown()
+	$('.dropdown-toggle').dropdown();
+	
+	/**
+	* 이미지 파일 업로드
+	*/
+	function uploadSummernoteImageFile(file, editor) {
+		data = new FormData();
+		data.append("file", file);
+		$.ajax({
+			data : data,
+			type : "POST",
+			//url : "/fileboardUp",
+			url : "${conPath }/imgUp.do",
+			enctype: 'multipart/form-data',
+			cache: false,
+			contentType : false,
+			processData : false,
+			success : function(data) {
+            	//항상 업로드된 파일의 url이 있어야 한다.
+            	//console.log("img.src = "+img.src);
+            	console.log("data.url = "+data);
+            	
+				//$(editor).summernote("insertImage", data.url);
+				$(editor).summernote("insertImage", data);
+			},
+			error: function (data) {
+				console.log(data);
+			}
+		});
+	}
 </script>
 </head>
 <body>

@@ -8,11 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-	<!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-
-    
-<!--  <link href="${conPath }/css/style.css" rel="stylesheet" />  -->
+<link href="${conPath }/css/style.css" rel="stylesheet" />
 </head>
 <body>
 <c:set var="SUCCESS" value="1" />
@@ -48,7 +44,7 @@
 	<script>alert('${modifyResult}');</script>
 </c:if>
 <jsp:include page="../main/header.jsp"/>
-<div class="container">
+<div id="content_form">
 <table>
 	<caption>게시판</caption>
 	<tr>
@@ -58,11 +54,10 @@
 	<c:if test="${not empty member}"> <%-- 로그인 후 화면 --%>
 		<td><a href="${conPath }/write_view.do"> 글 쓰 기 </a></td>
 		<td><a href="${conPath }/write_view2.do"> 글 쓰 기2 </a></td>
-		 <td><a class="waves-effect waves-teal btn-large blue lighten-1">Button</a></td>
 	</c:if>
 	</tr>
 </table>
-<table class="highlight" >
+<table>
 	<tr>
 		<th>글번호</th><th>작성자</th><th>글제목</th><th>조회수</th><th>날짜</th><th>IP</th>
 	</tr>
@@ -113,8 +108,6 @@
 	</c:if>
 </div>
 </div>
-<!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <jsp:include page="../main/footer.jsp"/>
 </body>
 </html>

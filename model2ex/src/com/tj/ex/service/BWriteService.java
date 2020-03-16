@@ -38,6 +38,11 @@ public class BWriteService implements Service {
 			String fTitle = mRequest.getParameter("fTitle");
 			String fContent = mRequest.getParameter("fContent");
 			String fIp = request.getRemoteAddr();
+			
+			System.out.println("mid = "+ mId);
+			System.out.println("fTitle = "+ fTitle);
+			System.out.println("fContent = "+ fContent);
+			System.out.println("fIp = "+ fIp);
 			BoardDao boardDao = BoardDao.getInstance();
 			int result = boardDao.write(mId, fTitle, fContent, fFileName, fIp);
 			

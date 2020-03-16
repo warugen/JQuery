@@ -39,6 +39,9 @@ INSERT INTO NOTICE (nId, aId, nTitle, nContent, nFileName )
         
 SELECT * FROM NOTICE;
 
+-- 공지사항 글 보기
+SELECT * FROM NOTICE WHERE nId = 1;
+
 -- 공지사항 조회수 올리기
 UPDATE NOTICE SET nHit = nHit + 1
 WHERE nId = 1;
@@ -46,12 +49,13 @@ WHERE nId = 1;
 
 -- 공지사항 글 수정
 UPDATE NOTICE SET nTitle = '제목수정',
-                    nContent = '본문수정',
-                    nFileName = NULL
+                    nContent = '본문수정222',
+                    nFileName = NULL,
+                    nRdate = SYSDATE
 WHERE nId=1;
 
 -- 공지사항 글 삭제
-DELETE FROM NOTICE WHERE fId = '6';
+DELETE FROM NOTICE WHERE nId = '6';
 
 -- 공지사항 글 가져오기 (STARTROW, ENDROW)
 SELECT * FROM (SELECT ROWNUM RN, A.* 
