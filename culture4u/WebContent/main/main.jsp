@@ -16,6 +16,16 @@
 </style>
 </head>
 <body>
+<c:if test="${not empty adminLoginResult }">
+		<script>
+			alert('${adminLoginResult}');
+		</script>
+	</c:if>
+	<c:if test="${not empty adminLoginError }">
+		<script>
+			history.back();
+		</script>
+	</c:if>
 	<jsp:include page="../main/header.jsp"/>
 	<div id="content_form">
 		main

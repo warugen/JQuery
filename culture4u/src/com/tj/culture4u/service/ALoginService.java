@@ -24,7 +24,7 @@ public class ALoginService implements Service {
 			request.setAttribute("admin", aDto);
 			request.setAttribute("adminLoginResult", "관리자계정으로 들어 오셨습니다.");
 		} else {
-			request.setAttribute("adminLoginError", "관리자계정으로 로그인 실패하였습니다.");
+			request.setAttribute("adminLoginResult", "관리자계정으로 로그인 실패하였습니다.");
 		}
 
 	}

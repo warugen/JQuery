@@ -11,7 +11,7 @@ CREATE TABLE C_MEMBER (
 	mPw      VARCHAR2(30)  NOT NULL,    -- 비밀번호
 	mName    VARCHAR2(30)  NOT NULL,    -- 이름
 	mEmail   VARCHAR2(30),              -- 이메일
-	mPhoto   VARCHAR2(30),              -- 사진
+	mPhoto   VARCHAR2(30)  DEFAULT 'default_pf.png' NOT NULL,              -- 사진
 	mBirth   DATE,                      -- 생년월일
 	mAddress VARCHAR2(100),             -- 주소
 	mRdate   DATE DEFAULT SYSDATE,      -- 가입등록일
