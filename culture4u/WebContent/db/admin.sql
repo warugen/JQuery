@@ -28,7 +28,7 @@ CREATE TABLE NOTICE (
     aId       VARCHAR2(30)   REFERENCES ADMIN(aId), -- 관리자id
 	nTitle    VARCHAR2(100)  NOT NULL,              -- 글제목
 	nContent  VARCHAR2(4000) NOT NULL,              -- 글본문
-	nFileName VARCHAR(100)   NULL,                  -- 첨부파일이름
+	nFileName VARCHAR(100),                  -- 첨부파일이름
 	nRdate    DATE DEFAULT SYSDATE,       -- 작성일
 	nHit      NUMBER(6)      DEFAULT 0              -- 조회수
 );
@@ -47,7 +47,7 @@ UPDATE NOTICE SET nHit = nHit + 1
 WHERE nId = 1;
 
 
--- 공지사항 글 수정
+-- 공지사항 글 수정 (nTitle, nContent, nFileName, nRdate)
 UPDATE NOTICE SET nTitle = '제목수정',
                     nContent = '본문수정222',
                     nFileName = NULL,

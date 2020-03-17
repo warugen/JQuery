@@ -13,9 +13,12 @@
     "browser-extension": {
       
     },
+<<<<<<< HEAD
     "jquery-ui1-12": {
       
     },
+=======
+>>>>>>> branch 'master' of https://github.com/warugen/JQuery.git
     "jquery-extension": {
       
     }

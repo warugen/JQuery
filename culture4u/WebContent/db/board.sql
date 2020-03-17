@@ -8,7 +8,7 @@ CREATE TABLE MAGAZINE (
 	zId       NUMBER(6)      PRIMARY KEY,   -- 매거진번호
 	zTitle    VARCHAR2(100)  NOT NULL,      -- 매거진제목
 	zContent  VARCHAR2(4000) NOT NULL,      -- 매거진본문
-	zFileName VARCHAR2(100),                -- 첨부파일이름
+	zFileName VARCHAR2(100),                -- 첨부파일이름(커버이미지)
 	zRdate    DATE DEFAULT SYSDATE,         -- 작성일
 	zHit      NUMBER(6)      DEFAULT 0,     -- 조회수
 	zIp       VARCHAR2(30),                 -- 글쓴IP
@@ -149,7 +149,13 @@ DELETE FROM MLIKE WHERE zId = 1 AND mId = 'aaa';
 -- 해당 id로 스크랩한것 가져오기(목록 가져오기)
 SELECT L.*, M.* FROM MLIKE L, MAGAZINE M  WHERE L.zId = M.zId AND mId = 'aaa' ORDER BY mLid;
 
+-- 해당 id로 스크랩한것 가져오기(startrow, endrow, mId)
+SELECT * FROM (SELECT ROWNUM RN, A.* 
+    FROM (SELECT L.MLID, L.MID, L.ZID, MNAME, Z.ZTITLE, Z.ZFILENAME FROM MLIKE L, C_MEMBER M, MAGAZINE Z WHERE L.MID=M.MID AND L.ZID = Z.ZID AND L.MID = 'aaa' ORDER BY mLid DESC) A)
+WHERE RN BETWEEN 1 AND 10;
 
+-- 해당 ID로 스크랩한 숫자 가져오기
+SELECT COUNT(*) FROM (SELECT L.MLID, L.MID, L.ZID, MNAME, Z.ZTITLE, Z.ZFILENAME FROM MLIKE L, C_MEMBER M, MAGAZINE Z WHERE L.MID=M.MID AND L.ZID = Z.ZID AND L.MID = 'aaa');
 ------------------------------------------------------------------------------------
 -- 월간공연일정
 ------------------------------------------------------------------------------------
