@@ -47,7 +47,7 @@ UPDATE NOTICE SET nHit = nHit + 1
 WHERE nId = 1;
 
 
--- 공지사항 글 수정
+-- 공지사항 글 수정 (nTitle, nContent, nFileName, nRdate)
 UPDATE NOTICE SET nTitle = '제목수정',
                     nContent = '본문수정222',
                     nFileName = NULL,
