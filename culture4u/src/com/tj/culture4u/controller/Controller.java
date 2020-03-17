@@ -460,19 +460,19 @@ public class Controller extends HttpServlet {
 			viewPage = "/monthly/write_view2.jsp";
 			
 		} else if (command.equals("/monthly_write.do")) {
-			// 메거진 글쓰기 저장하기 SWriteService.java
+			// 월간공연일정 글쓰기 저장하기 SWriteService.java
 			service = new  SWriteService();
 			service.execute(request, response);
 			viewPage = "/magazine_list.do";
 			
 		} else if (command.equals("/monthly_content_view.do")) {
-			// 메거진 게시글 보기 처리  -> SContentService.java
+			// 월간공연일정 게시글 보기 처리  -> SContentService.java
 			service = new SContentService();
 			service.execute(request, response);
 			viewPage = "/monthly/content_view.jsp";
 			
 		} else if (command.equals("/monthly_boradModify_view.do")) {
-			// 메거진 글수정하기화면 이동 처리  -> SModifyViewService.java
+			// 월간공연일정 글수정하기화면 이동 처리  -> SModifyViewService.java
 			service = new SModifyViewService();
 			service.execute(request, response);
 			viewPage = "/monthly/modify_view.jsp";
