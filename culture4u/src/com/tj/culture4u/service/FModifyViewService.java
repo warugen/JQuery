@@ -15,7 +15,6 @@ public class FModifyViewService implements Service {
 		FreeBoardDao boardDao = FreeBoardDao.getInstance();
 		FreeBoardDto dto = boardDao.modifyView_replyView(fId);
 		request.setAttribute("modify_view", dto);
-
 	}
 
 }

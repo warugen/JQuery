@@ -29,6 +29,16 @@ import com.tj.culture4u.service.MLoginService;
 import com.tj.culture4u.service.MModifyService;
 import com.tj.culture4u.service.MidConfirmService;
 import com.tj.culture4u.service.MlogoutService;
+import com.tj.culture4u.service.RCmtDelete;
+import com.tj.culture4u.service.RCmtModify;
+import com.tj.culture4u.service.RCmtWrite;
+import com.tj.culture4u.service.RContentService;
+import com.tj.culture4u.service.RDeleteService;
+import com.tj.culture4u.service.RModifyService;
+import com.tj.culture4u.service.RModifyViewService;
+import com.tj.culture4u.service.RReplyService;
+import com.tj.culture4u.service.RReplyViewService;
+import com.tj.culture4u.service.RWriteService;
 import com.tj.culture4u.service.Service;
 
 /**
@@ -226,7 +236,179 @@ public class Controller extends HttpServlet {
 		} 
 		/*********************************************************************
 		 * 
-		 * 						후기게시판(FreeBoard) 
+		 * 						후기게시판(ReviewBoard) 
+		 * 
+		 * *******************************************************************/
+		else if (command.equals("/review_list.do")) {
+			// 후기게시판으로 이동하기 FListService.java
+			service = new FListService();
+			service.execute(request, response);
+			viewPage = "/reviewboard/list.jsp";
+			
+		} else if (command.equals("/review_write_view.do")) {
+			// 후기게시판 글쓰기 버튼 눌렀을때 -> 글쓰기 화면으로 이동하기
+			viewPage = "/reviewboard/write_view.jsp";
+			
+		} else if (command.equals("/review_write_view2.do")) {
+			// 후기게시판 글쓰기 버튼 눌렀을때 -> 글쓰기 화면으로 이동하기
+			viewPage = "/reviewboard/write_view2.jsp";
+			
+		} else if (command.equals("/review_write.do")) {
+			// 후기게시판 글쓰기 저장하기 RWriteService.java
+			service = new  RWriteService();
+			service.execute(request, response);
+			viewPage = "/review_list.do";
+			
+		} else if (command.equals("/review_content_view.do")) {
+			// 후기게시판 게시글 보기 처리  -> FContentService.java
+			service = new RContentService();
+			service.execute(request, response);
+			viewPage = "/reviewboard/content_view.jsp";
+			
+		} else if (command.equals("/review_boradModify_view.do")) {
+			// 후기게시판 글수정하기화면 이동 처리  -> FModifyViewService.java
+			service = new RModifyViewService();
+			service.execute(request, response);
+			viewPage = "/reviewboard/modify_view.jsp";
+			
+		} else if(command.equals("/review_boradModify.do")) {
+			// 글수정 처리  -> BModifyService.java
+			service = new RModifyService();
+			service.execute(request, response);
+			viewPage = "/review_list.do";
+			
+		} else if(command.equals("/review_delete.do")) {
+			// 게시글 삭제 처리  -> BDeleteService.java
+			service = new RDeleteService();
+			service.execute(request, response);
+			viewPage = "/review_list.do";
+			
+		} else if(command.equals("/review_reply_view.do")) {
+			// 답변글달기 화면 이동 처리  -> BReplyViewService.java
+			service = new RReplyViewService();
+			service.execute(request, response);
+			viewPage = "/reviewboard/reply_view.jsp";
+			
+		} else if(command.equals("/review_reply.do")) {
+			// 답변글 달기 처리  -> BReplyService.java
+			service = new RReplyService();
+			service.execute(request, response);
+			viewPage = "/review_list.do";
+			
+		} else if (command.equals("/review_cmt_list.do")) {
+			// 해당 글에대한 댓글목록 가져오기 FCmtListService.java
+			service = new RCmtListService();
+			service.execute(request, response);
+			viewPage = "/reviewboard/cmt_list.jsp";
+			
+		} else if (command.equals("/review_cmt_wirte.do")) {
+			// 댓글 작성하기 FCmtWrite.java
+			service = new RCmtWrite();
+			service.execute(request, response);
+			viewPage = "/review_cmt_list.do";
+			
+		} else if (command.equals("/review_cmt_modify.do")) {
+			// 댓글 수정하기 FCmtModify.java
+			service = new RCmtModify();
+			service.execute(request, response);
+			viewPage = "/review_cmt_list.do";
+			
+		} else if (command.equals("/review_cmt_delete.do")) {
+			// 댓글 삭제하기 FCmtDelete.java
+			service = new RCmtDelete();
+			service.execute(request, response);
+			viewPage = "/review_cmt_list.do";
+			
+		} 
+		/*********************************************************************
+		 * 
+		 * 						메거진(Magazine) 
+		 * 
+		 * *******************************************************************/
+		else if (command.equals("/review_list.do")) {
+			// 후기게시판으로 이동하기 FListService.java
+			service = new FListService();
+			service.execute(request, response);
+			viewPage = "/reviewboard/list.jsp";
+			
+		} else if (command.equals("/review_write_view.do")) {
+			// 후기게시판 글쓰기 버튼 눌렀을때 -> 글쓰기 화면으로 이동하기
+			viewPage = "/reviewboard/write_view.jsp";
+			
+		} else if (command.equals("/review_write_view2.do")) {
+			// 후기게시판 글쓰기 버튼 눌렀을때 -> 글쓰기 화면으로 이동하기
+			viewPage = "/reviewboard/write_view2.jsp";
+			
+		} else if (command.equals("/review_write.do")) {
+			// 후기게시판 글쓰기 저장하기 RWriteService.java
+			service = new  RWriteService();
+			service.execute(request, response);
+			viewPage = "/review_list.do";
+			
+		} else if (command.equals("/review_content_view.do")) {
+			// 후기게시판 게시글 보기 처리  -> FContentService.java
+			service = new RContentService();
+			service.execute(request, response);
+			viewPage = "/reviewboard/content_view.jsp";
+			
+		} else if (command.equals("/review_boradModify_view.do")) {
+			// 후기게시판 글수정하기화면 이동 처리  -> FModifyViewService.java
+			service = new RModifyViewService();
+			service.execute(request, response);
+			viewPage = "/reviewboard/modify_view.jsp";
+			
+		} else if(command.equals("/review_boradModify.do")) {
+			// 글수정 처리  -> BModifyService.java
+			service = new RModifyService();
+			service.execute(request, response);
+			viewPage = "/review_list.do";
+			
+		} else if(command.equals("/review_delete.do")) {
+			// 게시글 삭제 처리  -> BDeleteService.java
+			service = new RDeleteService();
+			service.execute(request, response);
+			viewPage = "/review_list.do";
+			
+		} else if(command.equals("/review_reply_view.do")) {
+			// 답변글달기 화면 이동 처리  -> BReplyViewService.java
+			service = new RReplyViewService();
+			service.execute(request, response);
+			viewPage = "/reviewboard/reply_view.jsp";
+			
+		} else if(command.equals("/review_reply.do")) {
+			// 답변글 달기 처리  -> BReplyService.java
+			service = new RReplyService();
+			service.execute(request, response);
+			viewPage = "/review_list.do";
+			
+		} else if (command.equals("/review_cmt_list.do")) {
+			// 해당 글에대한 댓글목록 가져오기 FCmtListService.java
+			service = new RCmtListService();
+			service.execute(request, response);
+			viewPage = "/reviewboard/cmt_list.jsp";
+			
+		} else if (command.equals("/review_cmt_wirte.do")) {
+			// 댓글 작성하기 FCmtWrite.java
+			service = new RCmtWrite();
+			service.execute(request, response);
+			viewPage = "/review_cmt_list.do";
+			
+		} else if (command.equals("/review_cmt_modify.do")) {
+			// 댓글 수정하기 FCmtModify.java
+			service = new RCmtModify();
+			service.execute(request, response);
+			viewPage = "/review_cmt_list.do";
+			
+		} else if (command.equals("/review_cmt_delete.do")) {
+			// 댓글 삭제하기 FCmtDelete.java
+			service = new RCmtDelete();
+			service.execute(request, response);
+			viewPage = "/review_cmt_list.do";
+			
+		} 
+		/*********************************************************************
+		 * 
+		 * 						월간공연일정(MonthlyShow) 
 		 * 
 		 * *******************************************************************/
 		else if (command.equals("")) {
@@ -258,6 +440,7 @@ public class Controller extends HttpServlet {
 		} else if (command.equals("")) {
 			viewPage = "";
 		} 
+		
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);

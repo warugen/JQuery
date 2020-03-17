@@ -7,8 +7,9 @@ import javax.servlet.http.HttpSession;
 import com.tj.culture4u.dao.CmtFreeBoardDao;
 import com.tj.culture4u.dto.FreeBoardDto;
 import com.tj.culture4u.dto.MemberDto;
+import com.tj.culture4u.dto.ReviewBoardDto;
 
-public class FCmtWrite implements Service {
+public class RCmtWrite implements Service {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
@@ -16,11 +17,11 @@ public class FCmtWrite implements Service {
 		HttpSession session = request.getSession();
 		String mId = ((MemberDto)session.getAttribute("member")).getmId();
 		//int fId= Integer.parseInt(request.getParameter("fId"));
-		int fId = ((FreeBoardDto)session.getAttribute("free_cmt_view")).getfId();
-		String cFtext = request.getParameter("cFtext");
+		int rId = ((ReviewBoardDto)session.getAttribute("review_cmt_view")).getrId();
+		String cRtext = request.getParameter("cRtext");
 		
 		CmtFreeBoardDao cmtDao = CmtFreeBoardDao.getInstance();
-		int result = cmtDao.cmtWrite(mId, fId, cFtext);
+		int result = cmtDao.cmtWrite(mId, rId, cRtext);
 		
 		if(result == CmtFreeBoardDao.SUCCESS) {
 			// 댓글 등록 성공

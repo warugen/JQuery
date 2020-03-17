@@ -14,7 +14,7 @@ public class FCmtListService implements Service {
 		int fId = Integer.parseInt(request.getParameter("fId"));
 		
 		CmtFreeBoardDao cmtDao = CmtFreeBoardDao.getInstance();
-		request.setAttribute("cmtList", cmtDao.cmtList(fId));
+		request.setAttribute("fCmtList", cmtDao.cmtList(fId));
 
 	}
 
