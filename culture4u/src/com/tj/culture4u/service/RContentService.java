@@ -14,7 +14,7 @@ public class RContentService implements Service {
 		int rId = Integer.parseInt(request.getParameter("rId"));
 		ReviewBoardDao boardDao = ReviewBoardDao.getInstance();
 		ReviewBoardDto dto = boardDao.contentView(rId);
-		request.setAttribute("review_cmt_view", dto);
+		request.setAttribute("review_view", dto);
 
 	}
 

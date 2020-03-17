@@ -14,7 +14,7 @@ public class FContentService implements Service {
 		int fId = Integer.parseInt(request.getParameter("fId"));
 		FreeBoardDao boardDao = FreeBoardDao.getInstance();
 		FreeBoardDto dto = boardDao.contentView(fId);
-		request.setAttribute("free_cmt_view", dto);
+		request.setAttribute("free_view", dto);
 	}
 
 }

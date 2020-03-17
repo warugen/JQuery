@@ -5,10 +5,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.tj.culture4u.dao.CmtFreeBoardDao;
+import com.tj.culture4u.dao.CmtMagazineDao;
+import com.tj.culture4u.dto.MagazineDto;
 import com.tj.culture4u.dto.MemberDto;
-import com.tj.culture4u.dto.ReviewBoardDto;
 
-public class RCmtWrite implements Service {
+public class ZCmtWrite implements Service {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
@@ -16,13 +17,13 @@ public class RCmtWrite implements Service {
 		HttpSession session = request.getSession();
 		String mId = ((MemberDto)session.getAttribute("member")).getmId();
 		//int fId= Integer.parseInt(request.getParameter("fId"));
-		int rId = ((ReviewBoardDto)session.getAttribute("review_view")).getrId();
-		String cRtext = request.getParameter("cRtext");
+		int zId = ((MagazineDto)session.getAttribute("magazinew_view")).getzId();
+		String cZtext = request.getParameter("cZtext");
 		
-		CmtFreeBoardDao cmtDao = CmtFreeBoardDao.getInstance();
-		int result = cmtDao.cmtWrite(mId, rId, cRtext);
+		CmtMagazineDao cmtDao = CmtMagazineDao.getInstance();
+		int result = cmtDao.cmtWrite(mId, zId, cZtext);
 		
-		if(result == CmtFreeBoardDao.SUCCESS) {
+		if(result == CmtMagazineDao.SUCCESS) {
 			// 댓글 등록 성공
 			request.setAttribute("resultMsg", "댓글이 등록 되었습니다.");
 		} else {

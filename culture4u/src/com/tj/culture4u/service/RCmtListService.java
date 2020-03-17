@@ -1,11 +1,9 @@
-package com.tj.culture4u.controller;
+package com.tj.culture4u.service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.tj.culture4u.dao.CmtReviewBoardDao;
-import com.tj.culture4u.dao.CmtReviewBoardDao;
-import com.tj.culture4u.service.Service;
 
 public class RCmtListService implements Service {
 

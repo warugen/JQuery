@@ -10,14 +10,16 @@ public class MagazineLikeDto {
 	private int mLid;
 	private int zId;
 	private String mId;
-	private String zTitle;	// join해서 가져오기
+	private String zTitle;	  // join해서 가져오기
+	private String zFileName; // join해서 가져오기
 	
 	public MagazineLikeDto() {}
-	public MagazineLikeDto(int mLid, int zId, String mId, String zTitle) {
+	public MagazineLikeDto(int mLid, int zId, String mId, String zTitle, String zFileName) {
 		this.mLid = mLid;
 		this.zId = zId;
 		this.mId = mId;
 		this.zTitle = zTitle;
+		this.zFileName = zFileName;
 	}
 	
 	// getter & setter
@@ -45,11 +47,18 @@ public class MagazineLikeDto {
 	public void setzTitle(String zTitle) {
 		this.zTitle = zTitle;
 	}
+	public String getzFileName() {
+		return zFileName;
+	}
+	public void setzFileName(String zFileName) {
+		this.zFileName = zFileName;
+	}
 	
 	// toString
 	@Override
 	public String toString() {
-		return "MagazineLikeDto [mLid=" + mLid + ", zId=" + zId + ", mId=" + mId + ", zTitle=" + zTitle + "]";
-	}
+		return "MagazineLikeDto [mLid=" + mLid + ", zId=" + zId + ", mId=" + mId + ", zTitle=" + zTitle + ", zFileName="
+				+ zFileName + "]";
+	}	
 	
 }
