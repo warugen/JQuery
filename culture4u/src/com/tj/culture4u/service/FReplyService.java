@@ -22,7 +22,7 @@ public class FReplyService implements Service {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// 파일첨부  + 답변글처리
-		String path = request.getRealPath("fileboardUp");
+		String path = request.getRealPath("freeboardFiles");
 		int maxSize = 1024 * 1024 * 10; // 최대업로드 사이즈는 10M
 		MultipartRequest mRequest = null;
 		String fFileName = "";
@@ -65,7 +65,7 @@ public class FReplyService implements Service {
 			try {
 				is = new FileInputStream(serverFile);
 				os = new FileOutputStream(
-						"D:\\mega_IT\\source\\7_jQuery\\culture4u\\WebContent\\freeboardUp/" + fFileName);
+						"D:\\mega_IT\\source\\7_jQuery\\culture4u\\WebContent\\freeboardFiles/" + fFileName);
 				byte[] bs = new byte[(int) serverFile.length()];
 				while (true) {
 					int nByteCnt = is.read(bs);

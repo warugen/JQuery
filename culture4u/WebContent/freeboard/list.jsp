@@ -8,6 +8,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 	<!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
@@ -53,7 +55,7 @@
 	<caption>게시판</caption>
 	<tr>
 	<c:if test="${empty member}"> <%-- 로그인 전 화면 --%>
-		<td> 글쓰기는 사용자 로그인 이후에만 가능합니다. </td>
+		<td> <h5>글쓰기는 사용자 로그인 이후에만 가능합니다. </h5></td>
 	</c:if>
 	<c:if test="${not empty member}"> <%-- 로그인 후 화면 --%>
 		<td><a href="${conPath }/free_write_view.do"> 글 쓰 기 </a></td>
@@ -83,10 +85,10 @@
 				&nbsp;
 			</c:if>
 			<c:if test="${i eq dto.fIndent }">
-				└─
+				<i class="material-icons">subdirectory_arrow_right</i>
 			</c:if>
 			</c:forEach>
-			<a href="${conPath }/free_content_view.do?fId=${dto.fId}&pageNum=${pageNum}">${dto.fTitle }</a>
+			<a href="${conPath }/free_content_view.do?fId=${dto.fId}&pageNum=${pageNum}" class="black-text" >${dto.fTitle }</a>
 			
 			</td>
 			<td>${dto.fHit }</td>
@@ -113,6 +115,16 @@
 	[ <a href="${conPath }/list.do?pageNum=${endPage+1}"> 다음 </a> ]
 	</c:if>
 </div>
+
+  <ul class="pagination">
+    <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+    <li class="active"><a href="#!">1</a></li>
+    <li class="waves-effect"><a href="#!">2</a></li>
+    <li class="waves-effect"><a href="#!">3</a></li>
+    <li class="waves-effect"><a href="#!">4</a></li>
+    <li class="waves-effect"><a href="#!">5</a></li>
+    <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+  </ul>
 
 </div>
 <!-- Compiled and minified JavaScript -->

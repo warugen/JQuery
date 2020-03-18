@@ -8,14 +8,78 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="${conPath }/css/style.css" rel="stylesheet" />
+<!-- include libraries(jQuery, bootstrap) -->
+<link
+	href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css"
+	rel="stylesheet">
+<script
+	src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<script
+	src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+<!-- include summernote css/js-->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css"
+	rel="stylesheet">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
+<!-- include summernote-ko-KR -->
+<script src="/js/summernote-ko-KR.js"></script>
+<script>
+	$(document).ready(function() {
+		$('#summernote').summernote({
+			placeholder : '내용을 입력하세요...',
+			minHeight : 350,
+			maxHeight : null,
+			focus : true,
+			lang: "ko-KR"
+			/*,
+			callbacks: {	//여기 부분이 이미지를 첨부하는 부분
+				onImageUpload : function(files) {
+					console.log(files);
+					uploadSummernoteImageFile(files[0],this);
+				}
+			}
+		*/
+		});
+	});
+	$('.dropdown-toggle').dropdown();
+	
+	/**
+	* 이미지 파일 업로드
+	*/
+	function uploadSummernoteImageFile(file, editor) {
+		data = new FormData();
+		data.append("file", file);
+		$.ajax({
+			data : data,
+			type : "POST",
+			//url : "/fileboardUp",
+			url : "${conPath }/imgUp.do",
+			enctype: 'multipart/form-data',
+			cache: false,
+			contentType : false,
+			processData : false,
+			success : function(data) {
+            	//항상 업로드된 파일의 url이 있어야 한다.
+            	//console.log("img.src = "+img.src);
+            	console.log("data.url = "+data);
+            	
+				//$(editor).summernote("insertImage", data.url);
+				$(editor).summernote("insertImage", data);
+			},
+			error: function (data) {
+				console.log(data);
+			}
+		});
+	}
+</script>
 </head>
 <body>
 	<jsp:include page="../main/header.jsp" />
 	<div id="content_form">
 		<!-- 파라미터 : bid, pageNum -->
 		<!-- request의 attribute : reply_view(원글의 dto) -->
-		<form action="${conPath }/reply.do" method="post" enctype="multipart/form-data">
+		<form action="${conPath }/free_reply.do" method="post" enctype="multipart/form-data">
 			<!-- reply.do시 필요한 정보 원글 : bGroup, bStep, bIndent
 		                       지금저장할 답변글 : bName, bTitle, bContent, pageNum -->
 			<input type="hidden" name="fGroup" value="${reply_view.fGroup }">
@@ -35,8 +99,7 @@
 				</tr>
 				<tr>
 					<td>본문</td>
-					<td><textarea name="fContent" rows="3" required="required"
-							cols="32"></textarea></td>
+					<td><textarea id="summernote" name="fContent"></textarea></td>
 				</tr>
 				<tr>
 					<td>첨부파일</td>
@@ -46,7 +109,7 @@
 					<td colspan="2">
 						<input type="submit" value="답변쓰기" class="btn">
 						<input type="reset" value="취소" class="btn"> 
-						<input type="button" value="목록" class="btn" onclick="location.href='${conPath}/list.do'">
+						<input type="button" value="목록" class="btn" onclick="location.href='${conPath}/free_list.do'">
 					</td>
 			</table>
 		</form>
