@@ -18,7 +18,7 @@ public class MImgUpload implements Service {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// 에디터에 이미지 업로드 처리
-		String path = request.getRealPath("boardImg");
+		String path = request.getRealPath("freeboardUp");
 		int maxSize = 1024*1024 * 5; // 최대 업로드 사이즈 : 5M
 		String mPhoto = "";
 		try {
@@ -39,7 +39,7 @@ public class MImgUpload implements Service {
 				OutputStream os = null;
 				try {
 					is = new FileInputStream(serverFile);
-					os = new FileOutputStream("D:\\mega_IT\\source\\7_jQuery\\model2ex\\WebContent\\boardImg/"+mPhoto);
+					os = new FileOutputStream("D:\\mega_IT\\source\\7_jQuery\\culture4u\\WebContent\\freeboardUp/"+mPhoto);
 					byte[] bs = new byte[(int)serverFile.length()];
 					while(true) {
 						int readbyteCnt = is.read(bs);
@@ -61,8 +61,8 @@ public class MImgUpload implements Service {
 		}
 		
 		// 이미지 주소 상대경로 설정
-		String src = request.getContextPath() + "/boardImg/" + mPhoto;
-		
+		String src = request.getContextPath() + "/freeboardUp/" + mPhoto;
+		// 이미지 주소 반환
 		request.setAttribute("upResult", src);
 
 	}

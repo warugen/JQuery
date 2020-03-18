@@ -10,68 +10,22 @@
 <title>Insert title here</title>
 <link href="${conPath }/css/style.css" rel="stylesheet">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <!-- Compiled and minified CSS -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 <script>
-$(function() {
-	$( "#datepicker" ).datepicker({
-		dateFormat : 'yy-mm-dd',
-    	prevText: '이전 달',
-        nextText: '다음 달',
-        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-        dayNames: ['일', '월', '화', '수', '목', '금', '토'],
-        dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
-        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
-        showMonthAfterYear: true,
-        yearSuffix: '년',
-        showOtherMonths : true
-        
-        
-    });
-	
-	// ID 중복체크
-	$('#mId').keyup(function() {
-		var id = $('#mId').val().trim();
-		var sendData = 'mId='+id;
-		
-		$.ajax({
-			url : '${conPath }/ckId.do',
-			dataType : 'html',
-			data : sendData,
-			success : function(data, status) {
-				$('#showId').html(data);
-			}
-		});
-	});
-	
-	// submit 하기전 체크하기
-	$('#frm').submit(function() {
 
-		var idChResult = $('#showId').text().trim();
-		console.log('idChResult = ' + idChResult);
-		
-		if(idChResult != '사용 가능한 ID입니다.'){
-			alert('중복이니까 다른 아이디를 입력해');
-			$('#mId').val('');
-			$('#mId').focus();
-			return false;
-		}
-
-	});
-	
-	
-});
 </script>
 </head>
 <body>
 	<jsp:include page="../main/header.jsp" />
-	<div class="container">
+	<div class="container center-align">
+	<div class="z-depth-1 grey lighten-4 row ">
 		<form action="${conPath }/join.do" method="post" id="frm" enctype="multipart/form-data">
 			<table>
-				<caption>회원가입</caption>
+				<caption><h4>회원가입</h4></caption>
 				<tr>
 					<th>아이디</th>
 					<td>
@@ -109,16 +63,91 @@ $(function() {
 					<td><input type="text" name="mAddress"></td>
 				</tr>
 				<tr>
-					<td colspan="2"><input type="submit" value="회원가입"> <input
-						type="button" value="로그인"
-						onclick="location.href='${conPath}/loginView.do'">
+					<td colspan="2">
+					<input type="submit" name="btn_login" class="col s12 btn btn-large waves-effect teal" value="회원가입"> 
+					<input type="button" name="btn_login" class="col s12 btn btn-large waves-effect red" value="로그인"	onclick="location.href='${conPath}/loginView.do'">
 			</table>
 		</form>
+		</div>
 	</div>
 	<!-- Compiled and minified JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    
     <script>
- // 프로필 사진 미리보기
+    $(function() {
+    	$( "#datepicker" ).datepicker({
+    		/*
+    		dateFormat : 'yy-mm-dd',
+        	prevText: '이전 달',
+            nextText: '다음 달',
+            monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+            dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+            dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+            showMonthAfterYear: true,
+            yearSuffix: '년',
+            showOtherMonths : true
+    		*/
+    		months:['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+    		monthsShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+    		weekdays: ['일', '월', '화', '수', '목', '금', '토'],
+    		weekdaysShort:['일', '월', '화', '수', '목', '금', '토'],
+    		weekdaysAbbrev:['일', '월', '화', '수', '목', '금', '토'],
+    		selectMonths: true, 
+    		selectYears: 140,
+    		showMonthsShort: false,
+    		showWeekdaysFull: false,
+    		close:'닫기',
+    		clear:false,
+    		today:'오늘',
+    		format:'yyyy-mm-dd',
+    		formatSubmit: 'yyyy-mm-dd',
+    		max:true, // 이 옵션이 ture면 오늘까지밖에 날짜 선택을 못한다
+    		closeOnSelect:true,
+    		onSet:function(e){
+                if(e.select){
+    			    this.close();
+                }
+    		}
+            
+        });
+    	
+    	// ID 중복체크
+    	$('#mId').keyup(function() {
+    		var id = $('#mId').val().trim();
+    		var sendData = 'mId='+id;
+    		
+    		$.ajax({
+    			url : '${conPath }/ckId.do',
+    			dataType : 'html',
+    			data : sendData,
+    			success : function(data, status) {
+    				$('#showId').html(data);
+    			}
+    		});
+    	});
+    	
+    	// submit 하기전 체크하기
+    	$('#frm').submit(function() {
+
+    		var idChResult = $('#showId').text().trim();
+    		console.log('idChResult = ' + idChResult);
+    		
+    		if(idChResult != '사용 가능한 ID입니다.'){
+    			alert('중복이니까 다른 아이디를 입력해');
+    			$('#mId').val('');
+    			$('#mId').focus();
+    			return false;
+    		}
+
+    	});
+    	
+    	
+    });
+ 	// 프로필 사진 미리보기
 	function previewImage(targetObj, View_area) {
 	var preview = document.getElementById(View_area); //div id
 	var ua = window.navigator.userAgent;

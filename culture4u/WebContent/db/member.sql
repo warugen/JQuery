@@ -15,30 +15,33 @@ CREATE TABLE C_MEMBER (
 	mBirth   DATE,                      -- 생년월일
 	mAddress VARCHAR2(100),             -- 주소
 	mRdate   DATE DEFAULT SYSDATE,      -- 가입등록일
-	mLelvel   NUMBER(1)     DEFAULT 1    -- 회원레벨
+	mLevel  NUMBER(1)     DEFAULT 1    -- 회원레벨
 );
 
 -- ID 중복체크
-SELECT * FROM C_MEMBER WHERE mId='aaa';
+SELECT * FROM C_MEMBER WHERE mId='eee';
 
 -- 회원가입
-INSERT INTO C_MEMBER (mID, mPw, mName, mEmail, mPhoto, mBirth, mAddress)
-    VALUES ('aaa','222','홍길동','hong@naver.com','NOIMG.JPG','1990/12/12','종로');
+INSERT INTO C_MEMBER (mID, mPw, mName, mEmail, mBirth, mAddress)
+    VALUES ('aaa','222','홍길동','hong@naver.com','1990/12/12','종로');
     
 INSERT INTO C_MEMBER (mID, mPw, mName, mEmail, mPhoto, mBirth, mAddress)
-    VALUES ('bbb','111','박길동','hong@naver.com','NOIMG.JPG','1990/12/12','종로');
+    VALUES ('bbb','111','박길동','hong@naver.com','default_pf.png','1990/12/12','종로');
     
 INSERT INTO C_MEMBER (mID, mPw, mName, mEmail, mPhoto, mBirth, mAddress)
-    VALUES ('ccc','111','고길동','hong@naver.com','NOIMG.JPG','1990/12/12','종로');
+    VALUES ('ccc','111','고길동','hong@naver.com','default_pf.png','1990/12/12','종로');
     
 INSERT INTO C_MEMBER (mID, mPw, mName, mEmail, mPhoto, mBirth, mAddress)
-    VALUES ('ddd','111','왕길동','hong@naver.com','NOIMG.JPG','1990/12/12','종로');
+    VALUES ('ddd','111','왕길동','hong@naver.com','default_pf.png','1990/12/12','종로');
+
+INSERT INTO C_MEMBER (mID, mPw, mName, mEmail, mBirth, mAddress)
+    VALUES ('eee','111','유재석','hong@naver.com', '1990/12/12','종로');
 
 -- 로그인(mId, mPw)
 SELECT * FROM C_MEMBER WHERE mID='aaa' and mPW='222';
 
 -- 회원정보 가져오기 (DTO)
-SELECT * FROM C_MEMBER WHERE mId='aaa' and mLevel =1;
+SELECT * FROM C_MEMBER WHERE mId='aaa' and mLevel = 1;
 
 -- 회원정보 수정(mPw, mNAME / mEMAIL, mPHOTO, mBIRTH, mADDRESS 수정 가능)
 UPDATE C_MEMBER SET mPw = '111',
@@ -70,7 +73,8 @@ CREATE TABLE FREEBOARD (
 	fId       NUMBER(6)      PRIMARY KEY, -- 글번호
 	mId       VARCHAR2(30)   REFERENCES C_MEMBER(mId),   -- 글쓴이id
 	fTitle    VARCHAR2(100)  NOT NULL,    -- 글제목
-	fContent  VARCHAR2(4000) ,        -- 글본문
+	--fContent  VARCHAR2(4000) ,        -- 글본문
+    fContent  CLOB,        -- 글본문
 	fFileName VARCHAR2(100)  ,        -- 첨부파일이름
 	fRdate    DATE DEFAULT SYSDATE,       -- 작성일
 	fHit      NUMBER(6)      DEFAULT 0,        -- 조회수
@@ -148,6 +152,7 @@ INSERT INTO FREEBOARD (fId, mId, fTitle, fContent, fFileName, fGroup, fStep, fIn
 INSERT INTO FREEBOARD (fId, mId, fTitle, fContent, fFileName, fGroup, fStep, fIndent, fIp) 
     VALUES (FREEBOARD_SEQ.NEXTVAL, 'fff', '[답]가나다', '1111', null, 8, 0, 0, '127.0.0.1');
     
+COMMIT;
 ------------------------------------------------------------------------------------
 -- 자유게시판 댓글
 ------------------------------------------------------------------------------------
@@ -318,3 +323,4 @@ SELECT C.*, M.mName FROM CMT_REVIEW C, C_MEMBER M WHERE c.mid = m.mid AND C.rId 
 
 SELECT * FROM CMT_REVIEW ORDER BY cRrdate;
 
+COMMIT;

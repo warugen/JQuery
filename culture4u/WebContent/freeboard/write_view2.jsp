@@ -31,13 +31,15 @@
 			minHeight : 350,
 			maxHeight : null,
 			focus : true,
-			lang: "ko-KR",
+			lang: "ko-KR"
+			/*,
 			callbacks: {	//여기 부분이 이미지를 첨부하는 부분
 				onImageUpload : function(files) {
 					console.log(files);
 					uploadSummernoteImageFile(files[0],this);
 				}
 			}
+		*/
 		});
 	});
 	$('.dropdown-toggle').dropdown();
@@ -74,7 +76,7 @@
 </head>
 <body>
 	<jsp:include page="../main/header.jsp" />
-	<div id="container">
+	<div class="container center-align">
 		<form action="${conPath }/free_write.do" method="post"
 			enctype="multipart/form-data">
 			<table>
@@ -96,13 +98,12 @@
 					<td colspan="2"><input type="submit" value="글쓰기" class="btn">
 						<input type="reset" value="취소" class="btn"> <input
 						type="button" value="목록" class="btn"
-						onclick="location.href='${conPath}/free_list.do'"></td>
+						onclick="location.href='${conPath}/list.do'"></td>
 				</tr>
 			</table>
 		</form>
 	</div>
-	<!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	
 	<jsp:include page="../main/footer.jsp" />
 </body>
 </html>

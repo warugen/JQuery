@@ -7,7 +7,7 @@ CREATE TABLE ADMIN (
 	aPw   VARCHAR2(30) NOT NULL,     -- 비밀번호
 	aName VARCHAR2(30) NOT NULL      -- 이름
 );
-
+SELECT * FROM ADMIN;
 -- 관리자 등록
 INSERT INTO ADMIN VALUES ('admin','111','관리자');
 -- DAO에 넣을 sql

@@ -12,8 +12,10 @@ public class FContentService implements Service {
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// fid 가져와서 해당 글 dto로 가져오기
 		int fId = Integer.parseInt(request.getParameter("fId"));
+		System.out.println("fId = " + fId);
 		FreeBoardDao boardDao = FreeBoardDao.getInstance();
 		FreeBoardDto dto = boardDao.contentView(fId);
+		System.out.println(dto.toString());
 		request.setAttribute("free_view", dto);
 	}
 

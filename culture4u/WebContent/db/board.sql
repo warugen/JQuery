@@ -141,7 +141,7 @@ INSERT INTO MLIKE (mLid, zId, mId)
 INSERT INTO MLIKE (mLid, zId, mId)
     VALUES(MLIKE_SEQ.nextval, 2, 'aaa');
     
-SELECT * FROM MLIKE GROUP BY mId;
+SELECT * FROM MLIKE ;
     
 -- 좋아요 취소 게시물 삭제하기
 DELETE FROM MLIKE WHERE zId = 1 AND mId = 'aaa';

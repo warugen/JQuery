@@ -144,7 +144,7 @@ public class Controller extends HttpServlet {
 			// 로그인 처리 MLoginService.java
 			service = new MLoginService();
 			service.execute(request, response);
-			viewPage = "/list.do";
+			viewPage = "/main.do";
 			
 		}  else if (command.equals("/joinView.do")) {
 			// 회원가입 페이지로 이동하기
@@ -160,7 +160,7 @@ public class Controller extends HttpServlet {
 			// summernote에 이미지업로드하고 저장 경로 설정 MImgUpload.java
 			service = new MImgUpload();
 			service.execute(request, response);
-			viewPage = "/fileboard/imgUp.jsp";
+			viewPage = "/freeboard/imgUp.jsp";
 		
 		} else if (command.equals("/join.do")) {
 			// 회원가입 처리 MJoinSerivce.java
@@ -176,7 +176,7 @@ public class Controller extends HttpServlet {
 			// 회원정보 수정화면 처리 MModifyService.java
 			service = new MModifyService();
 			service.execute(request, response);
-			viewPage = "/list.do";
+			viewPage = "/main.do";
 			
 		} 
 		/*********************************************************************

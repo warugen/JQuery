@@ -22,7 +22,7 @@ public class MJoinSerivce implements Service {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		//회원 가입 처리
-		String path = request.getRealPath("memberPhotoUp");
+		String path = request.getRealPath("membersPhoto");
 		int maxSize = 1024*1024; // 최대 업로드 사이즈 : 1M
 		String mPhoto = "";
 		try {
@@ -35,7 +35,7 @@ public class MJoinSerivce implements Service {
 				String param = params.nextElement(); // mPhoto
 			//}
 			mPhoto = mRequest.getFilesystemName(param);
-			mPhoto = (mPhoto==null)? "NOIMG.JPG" : mPhoto;
+			mPhoto = (mPhoto==null)? "default_pf.png" : mPhoto;
 			
 			// 파라미터값 다 받아오기 -> DB에 넣기
 			String mId = mRequest.getParameter("mId");

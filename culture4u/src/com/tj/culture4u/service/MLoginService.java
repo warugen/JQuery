@@ -14,12 +14,15 @@ public class MLoginService implements Service {
 		// 로그인 처리하기
 		String mId = request.getParameter("mId");
 		String mPw = request.getParameter("mPw");
+		System.out.println("mId = " + mId);
+		System.out.println("mPw = " + mPw);
 		MemberDao mDao = MemberDao.getInstance();
 		int result = mDao.loginCheck(mId, mPw);
 		if(result == MemberDao.LOGIN_SUCCESS) {
 			//  로그인 성공
 			HttpSession session = request.getSession();
 			MemberDto member = mDao.getMember(mId);
+			System.out.println(member.toString());
 			session.setAttribute("member", member);
 			
 		} else {
