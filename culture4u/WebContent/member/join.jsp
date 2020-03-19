@@ -21,9 +21,9 @@
 </head>
 <body>
 	<jsp:include page="../main/header.jsp" />
-	<div class="container center-align">
-	<div class="z-depth-1 grey lighten-4 row ">
+	<div class="container center">
 		<form action="${conPath }/join.do" method="post" id="frm" enctype="multipart/form-data">
+	<div class="z-depth-1 grey lighten-4 row ">
 			<table>
 				<caption><h4>회원가입</h4></caption>
 				<tr>
@@ -67,8 +67,8 @@
 					<input type="submit" name="btn_login" class="col s12 btn btn-large waves-effect teal" value="회원가입"> 
 					<input type="button" name="btn_login" class="col s12 btn btn-large waves-effect red" value="로그인"	onclick="location.href='${conPath}/loginView.do'">
 			</table>
-		</form>
 		</div>
+		</form>
 	</div>
 	<!-- Compiled and minified JavaScript -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -124,8 +124,16 @@
     			url : '${conPath }/ckId.do',
     			dataType : 'html',
     			data : sendData,
-    			success : function(data, status) {
-    				$('#showId').html(data);
+    			success : function(data, status) {    				
+    				
+    				if(data == "이미 등록된 ID입니다.") {
+    					
+    					$('#showId').html(data);
+	    				$('#showId').css("color","red");    					
+    				} else {
+    					$('#showId').html(data);
+    					$('#showId').css("color","blue");
+    				}
     			}
     		});
     	});

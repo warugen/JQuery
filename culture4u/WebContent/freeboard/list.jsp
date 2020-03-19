@@ -9,11 +9,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
 	<!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-
-    
 <!--  <link href="${conPath }/css/style.css" rel="stylesheet" />  -->
 </head>
 <body>
@@ -46,21 +43,27 @@
 <c:if test="${replyResult eq FAIL }">
 	<script>alert('답변글 달기 실패')</script>
 </c:if>
+<!-- 
 <c:if test="${not empty modifyResult  }">
 	<script>alert('${modifyResult}');</script>
 </c:if>
+ -->
 <jsp:include page="../main/header.jsp"/>
-<div class="container">
+<div class="container center">
 <table>
-	<caption>게시판</caption>
+	<caption><h5>자유게시판</h5></caption>
 	<tr>
 	<c:if test="${empty member}"> <%-- 로그인 전 화면 --%>
-		<td> <h5>글쓰기는 사용자 로그인 이후에만 가능합니다. </h5></td>
+		<td> <h6>글쓰기는 사용자 로그인 이후에만 가능합니다. </h6></td>
 	</c:if>
 	<c:if test="${not empty member}"> <%-- 로그인 후 화면 --%>
+	<!-- 
 		<td><a href="${conPath }/free_write_view.do"> 글 쓰 기 </a></td>
 		<td><a href="${conPath }/free_write_view2.do"> 글 쓰 기2 </a></td>
-		 <td><a href="${conPath }/free_write_view2.do" class="waves-effect waves-teal btn-large blue lighten-1">글쓰기</a></td>
+		 -->
+		 <td>
+		 <a href="${conPath }/free_write_view.do" class="col s1 offset-s10 waves-effect waves-teal btn lighten-1">글쓰기</a>
+		 </td>
 	</c:if>
 	</tr>
 </table>
@@ -98,7 +101,7 @@
 		</c:forEach>
 	</c:if>
 </table>
-
+<!-- 
 <div class="paging">
 	<c:if test="${startPage > BLOCKSIZE }">
 	[ <a href="${conPath }/list.do?pageNum=${startPage-1}"> 이전 </a> ]
@@ -115,15 +118,23 @@
 	[ <a href="${conPath }/list.do?pageNum=${endPage+1}"> 다음 </a> ]
 	</c:if>
 </div>
-
+ -->
   <ul class="pagination">
-    <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-    <li class="active"><a href="#!">1</a></li>
-    <li class="waves-effect"><a href="#!">2</a></li>
-    <li class="waves-effect"><a href="#!">3</a></li>
-    <li class="waves-effect"><a href="#!">4</a></li>
-    <li class="waves-effect"><a href="#!">5</a></li>
-    <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+  	<c:if test="${startPage > BLOCKSIZE }">
+		<li class="waves-effect"><a href="${conPath }/free_list.do?pageNum=${startPage-1}"><i class="material-icons">chevron_left</i></a></li>
+	</c:if>
+	
+	<c:forEach var="i" begin="${startPage }" end="${endPage }" >
+		<c:if test="${i eq pageNum }">
+		<li class="active"><a href="">${i }</a></li>
+		</c:if>
+		<c:if test="${i != pageNum }">
+		<li class="waves-effect"><a href="${conPath }/free_list.do?pageNum=${i}"> ${i } </a></li>
+		</c:if>
+	</c:forEach>
+    <c:if test="${endPage < pageCnt }">
+		<li class="waves-effect"><a href="${conPath }/free_list.do?pageNum=${startPage-1}"><i class="material-icons">chevron_right</i></a></li>
+	</c:if>
   </ul>
 
 </div>

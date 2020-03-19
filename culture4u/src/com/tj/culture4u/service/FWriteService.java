@@ -29,8 +29,11 @@ public class FWriteService implements Service {
 		try {
 			mRequest = new MultipartRequest(request, path, maxSize, "utf-8", new DefaultFileRenamePolicy());
 			Enumeration<String> params = mRequest.getFileNames();
-			String param = params.nextElement();
-			fFileName = mRequest.getFilesystemName(param);
+			while (params.hasMoreElements()) {
+				String param = (String) params.nextElement();
+				fFileName = mRequest.getFilesystemName(param);
+				System.out.println("첨부파일 넘어온 파라미터 이름"+param+" / 첨부파일이름 : "+fFileName);
+			}
 			// mId, fTitle, fContent, fileName, fIp
 			HttpSession httpSession = request.getSession();
 			// 세션에서 mId값 가져오기
@@ -78,10 +81,8 @@ public class FWriteService implements Service {
 				System.out.println(e.getMessage());
 			} finally {
 				try {
-					if (os != null)
-						os.close();
-					if (is != null)
-						is.close();
+					if (os != null) os.close();
+					if (is != null) is.close();
 				} catch (Exception e) {
 					System.out.println(e.getMessage());
 				}

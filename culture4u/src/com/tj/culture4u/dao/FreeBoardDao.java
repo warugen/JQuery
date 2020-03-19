@@ -286,7 +286,7 @@ public class FreeBoardDao {
 	// 글 수정하기 (FId, FTitle, FContent, FILENAME,  FIp, FRDATE)
 	public int modify(int fId, String fTitle, String fContent, String fFileName, String fIp) {
 		int result = FAIL;
-		
+		System.out.println("글수정 Dao fFileName = "+fFileName);
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		

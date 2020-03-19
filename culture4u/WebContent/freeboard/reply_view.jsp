@@ -7,85 +7,28 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<!-- include libraries(jQuery, bootstrap) -->
-<link
-	href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css"
-	rel="stylesheet">
-<script
-	src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-<script
-	src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-<!-- include summernote css/js-->
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css"
-	rel="stylesheet">
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
-<!-- include summernote-ko-KR -->
-<script src="/js/summernote-ko-KR.js"></script>
-<script>
-	$(document).ready(function() {
-		$('#summernote').summernote({
-			placeholder : '내용을 입력하세요...',
-			minHeight : 350,
-			maxHeight : null,
-			focus : true,
-			lang: "ko-KR"
-			/*,
-			callbacks: {	//여기 부분이 이미지를 첨부하는 부분
-				onImageUpload : function(files) {
-					console.log(files);
-					uploadSummernoteImageFile(files[0],this);
-				}
-			}
-		*/
-		});
-	});
-	$('.dropdown-toggle').dropdown();
-	
-	/**
-	* 이미지 파일 업로드
-	*/
-	function uploadSummernoteImageFile(file, editor) {
-		data = new FormData();
-		data.append("file", file);
-		$.ajax({
-			data : data,
-			type : "POST",
-			//url : "/fileboardUp",
-			url : "${conPath }/imgUp.do",
-			enctype: 'multipart/form-data',
-			cache: false,
-			contentType : false,
-			processData : false,
-			success : function(data) {
-            	//항상 업로드된 파일의 url이 있어야 한다.
-            	//console.log("img.src = "+img.src);
-            	console.log("data.url = "+data);
-            	
-				//$(editor).summernote("insertImage", data.url);
-				$(editor).summernote("insertImage", data);
-			},
-			error: function (data) {
-				console.log(data);
-			}
-		});
-	}
-</script>
+<title>답변글 작성하기</title>
+<meta name="viewport" content="width = device-width, initial-scale = 1">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.js"></script>
 </head>
 <body>
 	<jsp:include page="../main/header.jsp" />
-	<div id="content_form">
+	<div class="container" id="content_form">
 		<!-- 파라미터 : bid, pageNum -->
 		<!-- request의 attribute : reply_view(원글의 dto) -->
-		<form action="${conPath }/free_reply.do" method="post" enctype="multipart/form-data">
+		<form class="col s12" action="${conPath }/free_reply.do" method="post" enctype="multipart/form-data">
 			<!-- reply.do시 필요한 정보 원글 : bGroup, bStep, bIndent
 		                       지금저장할 답변글 : bName, bTitle, bContent, pageNum -->
 			<input type="hidden" name="fGroup" value="${reply_view.fGroup }">
 			<input type="hidden" name="fStep" value="${reply_view.fStep }">
 			<input type="hidden" name="fIndent" value="${reply_view.fIndent }">
 			<input type="hidden" name="pageNum" value="${param.pageNum }">
+			<!-- 
 			<table>
 				<caption>${reply_view.fId }번글의답변쓰기 폼</caption>
 				<tr>
@@ -112,8 +55,64 @@
 						<input type="button" value="목록" class="btn" onclick="location.href='${conPath}/free_list.do'">
 					</td>
 			</table>
+			 -->
+			<div class="row">
+			<h5 class="header center-on-small-only">${reply_view.fId }번글 답변</h5>
+            <div class="input-field col s9">		
+                <div class="input-field">
+                	<input disabled value="${member.mName }(${member.mId })" id="disabled" type="text" class="validate">
+          			<label for="disabled">작성자</label>
+            	</div>
+            </div>
+            <div class="input-field col s9">		
+                <div class="input-field">
+                	<i class="material-icons prefix">mode_edit</i>
+              		<input type="text" name="fTitle" id="fTitle" required="required" value="[답]${reply_view.fTitle }">
+            	</div>
+            </div>
+            <div class="col s9">
+            	<textarea id="summernote" name="fContent"></textarea>
+            </div>
+            <div class="col s3">
+                <div class="file-field input-field">
+                    <div class="btn">
+                        <span>파일첨부</span>
+                        <input type="file" name="fFileName"/>
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text" placeholder="Upload file" />
+                    </div>
+                </div>
+				<!-- 
+                <a class="waves-effect waves-light btn" onclick="submit();"><i class="material-icons left">save</i>저장</a>
+                <input type="reset" class="btn white-text grey" value="취소">
+                <input type="button" value="목록" class="waves-effect btn" onclick="location.href='${conPath}/free_list.do'">
+                 -->
+                파일 크기는 최대 10M입니다.
+                <div class="row"></div>
+                <div class="row"></div>
+                <input type="submit" value="글쓰기" class="btn">
+				<input type="reset" value="취소" class="btn"> 
+				<input type="button" value="목록" class="waves-effect btn" onclick="location.href='${conPath}/free_list.do'">
+            </div>
+        </div>
 		</form>
 	</div>
+<script>
+	$(document).ready(function() {
+		$('#summernote').summernote({
+			placeholder : '내용을 입력하세요...',
+			height: 350,
+	        minHeight: null,
+	        maxHeight: null,
+	        lang : 'ko-KR',
+	        onImageUpload: function(files, editor, welEditable) {
+	                sendFile(files[0], editor, welEditable);
+	            }
+		});
+	});
+	$('.dropdown-toggle').dropdown();
+</script>
 	<jsp:include page="../main/footer.jsp" />
 </body>
 </html>

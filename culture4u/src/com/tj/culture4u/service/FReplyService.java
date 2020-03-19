@@ -29,8 +29,11 @@ public class FReplyService implements Service {
 		try {
 			mRequest = new MultipartRequest(request, path, maxSize, "utf-8", new DefaultFileRenamePolicy());
 			Enumeration<String> params = mRequest.getFileNames();
-			String param = params.nextElement();
-			fFileName = mRequest.getFilesystemName(param);
+			while (params.hasMoreElements()) {
+				String param = (String) params.nextElement();
+				fFileName = mRequest.getFilesystemName(param);
+				System.out.println("첨부파일 넘어온 파라미터 이름"+param+" / 첨부파일이름 : "+fFileName);
+			}
 			// mId, fTitle, fContent, fileName, fIp
 			HttpSession httpSession = request.getSession();
 			String mId = ((MemberDto) httpSession.getAttribute("member")).getmId();
@@ -40,6 +43,13 @@ public class FReplyService implements Service {
 			int fGroup = Integer.parseInt(mRequest.getParameter("fGroup"));
 			int fStep = Integer.parseInt(mRequest.getParameter("fStep"));
 			int fIndent = Integer.parseInt(mRequest.getParameter("fIndent"));
+			
+			System.out.println("mid = "+ mId);
+			System.out.println("fTitle = "+ fTitle);
+			System.out.println("fContent = "+ fContent);
+			System.out.println("fIp = "+ fIp);
+			System.out.println("fFileName = "+ fFileName);
+			
 			FreeBoardDao boardDao = FreeBoardDao.getInstance();
 			int result = boardDao.reply(mId, fTitle, fContent, fFileName, fGroup, fStep, fIndent, fIp);
 			// joinMember결과에 따라 적절히 request.setAttribute

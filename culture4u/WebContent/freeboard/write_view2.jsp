@@ -28,10 +28,13 @@
 	$(document).ready(function() {
 		$('#summernote').summernote({
 			placeholder : '내용을 입력하세요...',
-			minHeight : 350,
-			maxHeight : null,
-			focus : true,
-			lang: "ko-KR"
+			height: 350,
+	        minHeight: null,
+	        maxHeight: null,
+	        lang : 'ko-KR',
+	        onImageUpload: function(files, editor, welEditable) {
+	                sendFile(files[0], editor, welEditable);
+	            }
 			/*,
 			callbacks: {	//여기 부분이 이미지를 첨부하는 부분
 				onImageUpload : function(files) {
@@ -98,7 +101,7 @@
 					<td colspan="2"><input type="submit" value="글쓰기" class="btn">
 						<input type="reset" value="취소" class="btn"> <input
 						type="button" value="목록" class="btn"
-						onclick="location.href='${conPath}/list.do'"></td>
+						onclick="location.href='${conPath}/free_list.do'"></td>
 				</tr>
 			</table>
 		</form>

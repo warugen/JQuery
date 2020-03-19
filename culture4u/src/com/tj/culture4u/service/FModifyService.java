@@ -20,16 +20,20 @@ public class FModifyService implements Service {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// 파일첨부 로직 + 파라미터들 받아 DB에 join
-		String path = request.getRealPath("fileboardUp");
+		String path = request.getRealPath("freeboardFiles");
 		int maxSize = 1024 * 1024 * 10; // 최대업로드 사이즈는 10M
 		MultipartRequest mRequest = null;
-		String fFileName = "";
+		String fFileName = null;
 		try {
 			mRequest = new MultipartRequest(request, path, maxSize, "utf-8", new DefaultFileRenamePolicy());
 			Enumeration<String> params = mRequest.getFileNames();
-			String param = params.nextElement();
-			fFileName = mRequest.getFilesystemName(param);
+			while (params.hasMoreElements()) {
+				String param = params.nextElement();
+				fFileName = mRequest.getFilesystemName(param);
+				System.out.println("첨부파일 넘어온 파라미터 이름"+param+" / 첨부파일이름 : "+fFileName);
+			}
 			String dbFileName = mRequest.getParameter("dbFileName");
+			System.out.println("DB에 저장된 파일이름 : "+dbFileName);
 			if (fFileName == null) {
 				fFileName = dbFileName;
 			}
@@ -63,7 +67,7 @@ public class FModifyService implements Service {
 			try {
 				is = new FileInputStream(serverFile);
 				os = new FileOutputStream(
-						"D:\\mega_IT\\source\\7_jQuery\\culture4u\\WebContent\\freeboardUp/" + fFileName);
+						"D:\\mega_IT\\source\\7_jQuery\\culture4u\\WebContent\\freeboardFiles/" + fFileName);
 				byte[] bs = new byte[(int) serverFile.length()];
 				while (true) {
 					int nByteCnt = is.read(bs);
