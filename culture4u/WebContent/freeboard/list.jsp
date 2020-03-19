@@ -119,6 +119,7 @@
 	</c:if>
 </div>
  -->
+ <div class="row"></div>
   <ul class="pagination">
   	<c:if test="${startPage > BLOCKSIZE }">
 		<li class="waves-effect"><a href="${conPath }/free_list.do?pageNum=${startPage-1}"><i class="material-icons">chevron_left</i></a></li>
@@ -137,6 +138,7 @@
 	</c:if>
   </ul>
 
+<div class="row"></div>
 </div>
 <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
