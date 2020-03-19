@@ -63,7 +63,11 @@ header .lnb ul li:hover .subMenu {display: block; margin: 10px 0 0 0;}
 	<c:if test="${empty member and empty admin}"> <%-- 로그인 전 화면 --%>
 		<div class="gnb">
 			<ul>
-				<li><a href="${conPath }/free_list.do">고객센터</a></li>
+				<li><a href="${conPath }/notice_list.do">공지사항</a></li>
+				<li><a href="${conPath }/review_list.do">후기게시판</a></li>
+				<li><a href="${conPath }/monthly_list.do">공연알림</a></li>
+				<li><a href="${conPath }/magazine_list.do">매거진</a></li>
+				<li><a href="${conPath }/free_list.do">자유게시판</a></li>
 				<li><a href="${conPath }/joinView.do">회원가입</a></li>
 				<li><a href="${conPath }/loginView.do">로그인</a></li>
 			</ul>
@@ -103,7 +107,11 @@ header .lnb ul li:hover .subMenu {display: block; margin: 10px 0 0 0;}
 	<c:if test="${not empty member and empty admin}"> <%-- 사용자 모드 로그인 화면--%>
 		<div class="gnb">
 			<ul>
-				<li><a href="${conPath }/free_list.do">고객센터</a></li>
+				<li><a href="${conPath }/notice_list.do">공지사항</a></li>
+				<li><a href="${conPath }/review_list.do">후기게시판</a></li>
+				<li><a href="${conPath }/monthly_list.do">공연알림</a></li>
+				<li><a href="${conPath }/magazine_list.do">매거진</a></li>
+				<li><a href="${conPath }/free_list.do">자유게시판</a></li>
 				<li><a href="${conPath }/logout.do">로그아웃</a></li>
 				<li><a href="${conPath }/modifyView.do">정보수정</a></li>
 				<li><a>${member.mName }님 &nbsp; ▶</a></li>	
@@ -144,7 +152,11 @@ header .lnb ul li:hover .subMenu {display: block; margin: 10px 0 0 0;}
 	<c:if test="${empty member and not empty admin}"> <%-- 관리자 모드 로그인 화면--%>
 		<div class="gnb">
 			<ul>
-				<li><a href="${conPath }/free_list.do">고객센터</a></li>
+				<li><a href="${conPath }/notice_list.do">공지사항</a></li>
+				<li><a href="${conPath }/review_list.do">후기게시판</a></li>
+				<li><a href="${conPath }/monthly_list.do">공연알림</a></li>
+				<li><a href="${conPath }/magazine_list.do">매거진</a></li>
+				<li><a href="${conPath }/free_list.do">자유게시판</a></li>
 				<li><a href="${conPath }/logout.do">관리자모드나가기</a></li>
 				<li><a>${admin.aName }님 &nbsp; ▶</a></li>	
 			</ul>
