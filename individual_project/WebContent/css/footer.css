@@ -1,0 +1,28 @@
+@charset "UTF-8";
+footer {width: 100%;margin: 0 auto; background-color:#000000;}
+footer div.copyright{ 
+		margin: 0px auto;
+		width:1200px;  
+		height: 150px;
+		text-align: center;
+		
+}
+footer div.copyright ul{
+	margin: 0 auto;
+	padding-top: 30px;
+}
+
+footer div.copyright ul li{
+	text-align: center;
+	color: white;
+	list-style: none;
+	margin: 0 auto;
+	font-size: 0.7em;
+}
+footer div.copyright hr{
+	border-top: 2px solid white;
+}
+footer div.copyright ul li:last-child {
+	font-weight: bold;
+
+}
