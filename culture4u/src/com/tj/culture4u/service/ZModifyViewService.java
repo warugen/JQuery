@@ -12,6 +12,7 @@ public class ZModifyViewService implements Service {
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// zId로 해당 글 가져와서 글수정화면으로 보내주기
 		int zId = Integer.parseInt(request.getParameter("zId"));
+		System.out.println("수정눌렀을때 : "+zId);
 		MagazineDao boardDao = MagazineDao.getInstance();
 		MagazineDto dto = boardDao.modifyView(zId);
 		request.setAttribute("modify_view", dto);

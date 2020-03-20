@@ -15,8 +15,9 @@
 <!--  <link href="${conPath }/css/style.css" rel="stylesheet" />  -->
 <style>
 *{
-	font-family: 'Noto Sans KR', sans-serif;
+font-family: 'Noto Sans KR', sans-serif;
 }
+
 </style>
 </head>
 <body>
@@ -63,15 +64,6 @@
 		<td> <h6>글쓰기는 사용자 로그인 이후에만 가능합니다. </h6></td>
 	</c:if>
 	<c:if test="${not empty member}"> <%-- 로그인 후 화면 --%>
-	<!-- 
-		<td><a href="${conPath }/free_write_view.do"> 글 쓰 기 </a></td>
-		<td><a href="${conPath }/free_write_view2.do"> 글 쓰 기2 </a></td>
-		 -->
-		 <td>
-		 <a href="${conPath }/free_write_view.do" class="col s1 offset-s10 waves-effect waves-teal btn lighten-1">글쓰기</a>
-		 </td>
-	</c:if>
-	<c:if test="${not empty admin}"> <%-- 로그인 후 화면 --%>
 	<!-- 
 		<td><a href="${conPath }/free_write_view.do"> 글 쓰 기 </a></td>
 		<td><a href="${conPath }/free_write_view2.do"> 글 쓰 기2 </a></td>

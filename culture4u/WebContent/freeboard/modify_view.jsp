@@ -21,48 +21,13 @@
 	<div class="container">
 	<div class="row"></div>
     <div class="row"></div>
-    <div class="row"></div>
+    <div class="z-depth-1 grey lighten-4 row "
+            style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
 		<form action="${conPath }/free_boradModify.do" method="post"	enctype="multipart/form-data">
-			<input type="text" name="pageNum" value="${param.pageNum }">
-			<input type="text" name="fId" value="${modify_view.fId }">
-			<input type="text" name="dbFileName" value="${modify_view.fFileName }">
-			<!-- 
-			<table>
-				<caption>${modify_view.fId }번글 수정</caption>
-				<tr>
-					<th>작성자</th>
-					<td><input type="text" required="required" size="30"
-						value="${modify_view.mName }(${modify_view.mId })"
-						readonly="readonly"></td>
-				</tr>
-				<tr>
-					<th>제목</th>
-					<td><input type="text" name="fTitle" required="required"
-						size="30" value="${modify_view.fTitle }"></td>
-				</tr>
-				<tr>
-					<th>본문</th>
-					<td><textarea rows="5" cols="32" name="fContent">${modify_view.fContent }</textarea></td>
-				</tr>
-				<tr>
-					<th>첨부파일</th>
-					<td><input type="file" name="fFileName" class="btn">
-						원첨부파일: <c:if test="${not empty modify_view.fFileName }">
-							<a href="${conPath }/fileboardUp/${modify_view.fFileName}"
-								target="_blank">${modify_view.fFileName}</a>
-						</c:if> <c:if test="${empty modify_view.fFileName }">
-						 		첨부파일없음
-						 	</c:if></td>
-				</tr>
-				<tr>
-					<td colspan="2"><input type="submit" value="수정" class="btn">
-						<input type="button" value="목록" class="btn"
-						onclick="location='${conPath}/list.do?pageNum=${param.pageNum }'">
-						<input type="reset" value="취소" class="btn"
-						onclick="history.back()"></td>
-				</tr>
-			</table>
-			 -->
+			<input type="hidden" name="pageNum" value="${param.pageNum }">
+			<input type="hidden" name="fId" value="${modify_view.fId }">
+			<input type="hidden" name="dbFileName" value="${modify_view.fFileName }">
+
 			<div class="row">
 			<h5 class="header center-on-small-only">${modify_view.fId }번글 수정</h5>
             <div class="input-field col s9">		
@@ -110,6 +75,7 @@
             </div>
         </div>
 		</form>
+		</div>
 	</div>
 <script>
 	$(document).ready(function() {

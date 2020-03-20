@@ -11,17 +11,12 @@
 <!--Import Google Icon Font-->
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <!--Import materialize.css-->
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 <!--  <link href="${conPath }/css/style.css" rel="stylesheet">-->
-<style>
-*{
-	font-family: 'Noto Sans KR', sans-serif;
-}
-</style>
+
 </head>
 <body>
 
@@ -49,18 +44,12 @@
             <section class="teal lighten-4" style="padding:1px;">
                 <div class="container">
                     <div class="row row-noclear">
-                    <div class="section">
-					    <h3 class="center">${free_view.fTitle }</h3>
-					    <p class="right"><fmt:formatDate value="${free_view.fRdate }" pattern="yyyy년MM월dd일(E)일 작성" /></p></br>
-					    <p class="right">${free_view.mName}(${free_view.mId})님</p>
-				  	</div>
-				  	<!-- 
-                        	<h2 class="header center-on-small-only">${free_view.fTitle }</h2>
-                         
+                        <h2 class="header center-on-small-only">${free_view.fTitle }</h2>
+                        <div class="row">
                             <h5 class="light text-lighten-4 center-on-small-only">${free_view.mName}(${free_view.mId})님 </h5>
                             <h5 class="light text-lighten-4 center-on-small-only"><fmt:formatDate value="${free_view.fRdate }" pattern="yyyy년MM월dd일(E)일 작성" /> </h5>
-                          -->   
-                        
+                        </div>
+
                         <h6 class="light text-lighten-4 center-on-small-only">
                         <c:if test="${not empty free_view.fFileName }">
 							첨부파일 : <a class="red-text" href="${conPath }/freeboardFiles/${free_view.fFileName}"	target="_blank">${free_view.fFileName}</a>

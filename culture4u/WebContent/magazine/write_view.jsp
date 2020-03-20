@@ -23,7 +23,7 @@
     <div class="row"></div>
     <div class="z-depth-1 grey lighten-4 row "
             style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
-		<form class="col s12" action="${conPath }/free_write.do" method="post" enctype="multipart/form-data">
+		<form class="col s12" action="${conPath }/magazine_write.do" method="post" enctype="multipart/form-data">
 		<div class="row">
             <div class="input-field col s9">		
                 <div class="input-field">
@@ -37,8 +37,8 @@
             <div class="col s3">
                 <div class="file-field input-field">
                     <div class="btn">
-                        <span>파일첨부</span>
-                        <input type="file" />
+                        <span>커버이미지선택</span>
+                        <input type="file" name="fFileName" />
                     </div>
                     <div class="file-path-wrapper">
                         <input class="file-path validate" type="text" placeholder="Upload file" />
@@ -56,7 +56,7 @@
                 <div class="row"></div>                
                 <input type="submit" value="글쓰기" class="btn">
 				<input type="reset" value="취소" class="btn"> 
-				<input type="button" value="목록" class="waves-effect btn" onclick="location.href='${conPath}/free_list.do'">
+				<input type="button" value="목록" class="waves-effect btn" onclick="location.href='${conPath}/magazine_list.do'">
             </div>
         </div>
         <!-- 

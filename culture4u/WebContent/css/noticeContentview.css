@@ -1,0 +1,70 @@
+@charset "UTF-8";
+#wrap {
+	margin: 0 auto;
+	padding: 0 50px;
+	font-family: 'Noto Sans KR', sans-serif;
+	overflow: hidden;
+}
+#wrap .content h2{
+	margin-top: 10px;
+}
+#wrap .content .list{
+	margin: 40px auto;
+	width: 1300px;
+	padding: 0 150px;
+	
+}
+#wrap .content .list .table{
+	width: 1000px;
+	margin: 0 auto;
+	text-align: center;
+	border-top: 1px solid #dfdfdf;
+	border-collapse: collapse;
+	font-size: 13px;
+}
+
+#wrap .content .list .table tr{
+	height: 50px;
+}
+#wrap .content .list .table .th1 {
+	width: 100px;
+	
+}
+#wrap .content .list .table .th2 {
+	width: 800px;
+	text-align: left; padding-left:50px;
+}
+#wrap .content .list .table td {
+	border-top: 1px solid #dfdfdf;
+	border-bottom: 1px solid #dfdfdf;
+	box-sizing: border-box;
+	padding: 10px;
+}
+#wrap .content .list .table td span{
+	font-size: 10px;
+	color: gray;
+}
+#wrap .content .list p{
+	width: 1100px;
+	height: 50px;
+	text-align: right;
+	margin-top: 20px;
+	margin-right: 40px;
+}
+.paging{
+	margin: 0 auto;
+	text-align: center;
+	height: 50px;
+	line-height: 20px;
+}
+.paging span{
+	padding: 0 7px;
+}
+.noticeText {
+	width: 800px;
+	height: 500px;
+	margin: 20px auto;
+	overflow: hidden;
+	font-size: 15px;
+	text-align: left;
+}

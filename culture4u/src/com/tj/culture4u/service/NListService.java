@@ -22,7 +22,7 @@ public class NListService implements Service {
 		int endRow = (startRow + PAGESIZE) -1;
 		
 		NoticeDao bDao = NoticeDao.getInstance();
-		request.setAttribute("list", bDao.boardList(startRow, endRow));	// 글 목록
+		request.setAttribute("noticeList", bDao.boardList(startRow, endRow));	// 글 목록
 		int totCnt = bDao.getBoardTotCnt();
 		int pageCnt = (int)Math.ceil((double)totCnt / PAGESIZE);
 		int startPage = ((currentPage -1) / BLOCKSIZE ) * BLOCKSIZE + 1;

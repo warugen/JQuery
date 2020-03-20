@@ -226,7 +226,7 @@ public class MagazineDao {
 	
 	// 글수정화면 보이기 (원글수정 호출)
 	public MagazineDto modifyView(int zId) {
-		// 해당 fid로 글수정할 dto 가져오기 조회수1up은 안한다.
+		// 해당 zId로 글수정할 dto 가져오기 조회수1up은 안한다.
 		MagazineDto dto = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -306,7 +306,7 @@ public class MagazineDao {
 		return result;
 	}
 	
-	// 글 삭제하기(FId로 삭제하기)
+	// 글 삭제하기(zId로 삭제하기)
 	public int delete(int zId) {
 		int result = FAIL;
 		

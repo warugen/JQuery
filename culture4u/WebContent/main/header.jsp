@@ -18,7 +18,7 @@ header li { list-style: none;}
 header .gnb{width: 100%;	background-color: #1b3440;}
 header .gnb ul {
 	overflow: hidden;
-	width:700px;
+	width:1080px;
 	height: 30px;
 	line-height: 30px;
 	margin: 0 auto;

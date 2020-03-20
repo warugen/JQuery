@@ -21,20 +21,24 @@ public class ZModifyService implements Service {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// 파일첨부 로직 + 파라미터들 받아 DB에 join
-		String path = request.getRealPath("fileboardUp");
+		String path = request.getRealPath("magazineUp");
 		int maxSize = 1024 * 1024 * 10; // 최대업로드 사이즈는 10M
 		MultipartRequest mRequest = null;
 		String zFileName = "";
 		try {
 			mRequest = new MultipartRequest(request, path, maxSize, "utf-8", new DefaultFileRenamePolicy());
 			Enumeration<String> params = mRequest.getFileNames();
-			String param = params.nextElement();
-			zFileName = mRequest.getFilesystemName(param);
+			//while (params.hasMoreElements()) {
+				String param = params.nextElement();
+				zFileName = mRequest.getFilesystemName(param);
+				System.out.println("첨부파일 넘어온 파라미터 이름"+param+" / 첨부파일이름 : "+zFileName);
+			//}
 			String dbFileName = mRequest.getParameter("dbFileName");
 			if (zFileName == null) {
 				zFileName = dbFileName;
 			}
 			// zId, zTitle, zContent, zFileName,  zIp
+			System.out.println("mRequest.getParameter(\"zId\") = " + mRequest.getParameter("zId"));
 			int zId = Integer.parseInt(mRequest.getParameter("zId"));
 			String zTitle = mRequest.getParameter("zTitle");
 			String zContent = mRequest.getParameter("zContent");

@@ -20,15 +20,23 @@ public class ZWriteService implements Service {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// 파일첨부 로직 + 파라미터들 받아 DB에 join
-		String path = request.getRealPath("fileboardUp");
+		String path = request.getRealPath("magazineUp");
 		int maxSize = 1024 * 1024 * 10; // 최대업로드 사이즈는 10M
 		MultipartRequest mRequest = null;
 		String zFileName = "";
 		try {
 			mRequest = new MultipartRequest(request, path, maxSize, "utf-8", new DefaultFileRenamePolicy());
 			Enumeration<String> params = mRequest.getFileNames();
-			String param = params.nextElement();
-			zFileName = mRequest.getFilesystemName(param);
+			while (params.hasMoreElements()) {
+				String param = (String) params.nextElement();
+				zFileName = mRequest.getFilesystemName(param);
+				System.out.println("첨부파일 넘어온 파라미터 이름"+param+" / 첨부파일이름 : "+zFileName);
+			}
+			
+			// 커버이미지 선택안하면 기본 이미지로 설정해준다.
+			if(zFileName.equals("")) {
+				zFileName = "default.jpg";
+			}
 			// zId, zTitle, zContent, zFileName, zIp
 			String zTitle = mRequest.getParameter("fTitle");
 			String zContent = mRequest.getParameter("fContent");

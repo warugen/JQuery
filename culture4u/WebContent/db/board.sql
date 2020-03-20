@@ -7,8 +7,8 @@ DROP TABLE MAGAZINE;
 CREATE TABLE MAGAZINE (
 	zId       NUMBER(6)      PRIMARY KEY,   -- 매거진번호
 	zTitle    VARCHAR2(100)  NOT NULL,      -- 매거진제목
-	zContent  VARCHAR2(4000) NOT NULL,      -- 매거진본문
-	zFileName VARCHAR2(100),                -- 첨부파일이름(커버이미지)
+	zContent  CLOB NOT NULL,      -- 매거진본문
+	zFileName VARCHAR2(100) DEFAULT 'default.jpg',                -- 첨부파일이름(커버이미지)
 	zRdate    DATE DEFAULT SYSDATE,         -- 작성일
 	zHit      NUMBER(6)      DEFAULT 0,     -- 조회수
 	zIp       VARCHAR2(30),                 -- 글쓴IP
@@ -17,11 +17,11 @@ CREATE TABLE MAGAZINE (
 
 -- 글쓰기(원글)
 INSERT INTO MAGAZINE (zId, zTitle, zContent, zFileName, zIp)
-    VALUES (MAGAZINE_SEQ.NEXTVAL, '매거진1','컨텐트1', null, '192.168.10.151');
+    VALUES (MAGAZINE_SEQ.NEXTVAL, '매거진1','컨텐트1', '', '192.168.10.151');
 
 -- 더미데이터(원글)
-INSERT INTO MAGAZINE (zId, zTitle, zContent, zFileName, zIp)
-    VALUES (MAGAZINE_SEQ.NEXTVAL, '매거진2','컨텐트2', null, '192.168.10.151');
+INSERT INTO MAGAZINE (zId, zTitle, zContent,  zIp)
+    VALUES (MAGAZINE_SEQ.NEXTVAL, '매거진1','컨텐트1',  '192.168.10.151');
 
 INSERT INTO MAGAZINE (zId, zTitle, zContent, zFileName, zIp)
     VALUES (MAGAZINE_SEQ.NEXTVAL, '매거진3','컨텐트3', null, '192.168.10.151');
@@ -34,8 +34,25 @@ INSERT INTO MAGAZINE (zId, zTitle, zContent, zFileName, zIp)
 
 INSERT INTO MAGAZINE (zId, zTitle, zContent, zFileName, zIp)
     VALUES (MAGAZINE_SEQ.NEXTVAL, '매거진6','컨텐트6', null, '192.168.10.151');
+-- 이미지
+INSERT INTO MAGAZINE (zId, zTitle, zContent,  zIp)
+    VALUES (MAGAZINE_SEQ.NEXTVAL, '매거진2','컨텐트2',  '192.168.10.151');
+    
+INSERT INTO MAGAZINE (zId, zTitle, zContent,  zIp)
+    VALUES (MAGAZINE_SEQ.NEXTVAL, '매거진3','컨텐트3',  '192.168.10.151');
+    
+INSERT INTO MAGAZINE (zId, zTitle, zContent,  zIp)
+    VALUES (MAGAZINE_SEQ.NEXTVAL, '매거진4','컨텐트4',  '192.168.10.151');
+    
+INSERT INTO MAGAZINE (zId, zTitle, zContent,  zIp)
+    VALUES (MAGAZINE_SEQ.NEXTVAL, '매거진5','컨텐트5',  '192.168.10.151');
+    
+INSERT INTO MAGAZINE (zId, zTitle, zContent,  zIp)
+    VALUES (MAGAZINE_SEQ.NEXTVAL, '매거진6','컨텐트6',  '192.168.10.151');
     
 SELECT * FROM MAGAZINE;
+
+COMMIT;
 
 -- zHit 하나 올리기(1번글 조회수 하나 올리기)
 UPDATE MAGAZINE SET zHit = zHit + 1
@@ -47,7 +64,7 @@ SELECT * FROM MAGAZINE ORDER BY zRdate DESC;
 
 SELECT * FROM (SELECT ROWNUM RN, A.* 
     FROM (SELECT * FROM MAGAZINE ORDER BY zRdate DESC) A)
-WHERE RN BETWEEN 1 AND 10;
+WHERE RN BETWEEN 1 AND 12;
 
 -- 글갯수
 SELECT COUNT(*) FROM MAGAZINE;
@@ -59,7 +76,7 @@ SELECT * FROM MAGAZINE WHERE zId = 1;
 -- 글 수정하기(zId, zTitle, zContent, zFileName,  zIp, rRdate)
 UPDATE MAGAZINE SET zTitle = '제목수정',
                     zContent = '본문수정',
-                    zFileName = NULL,
+                    zFileName = 'test.png',
                     zRdate = SYSDATE
 WHERE zId=1;
 
