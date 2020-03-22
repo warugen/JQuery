@@ -50,7 +50,7 @@
  -->
 <jsp:include page="../main/header.jsp"/>
 <div class="container center">
-<h4 class="center"><span class="teal-text">매거진</span></h4>
+<h4 class="center"><span class="teal-text">월간공연일정</span></h4>
 <%-- 관리자일때 글작성 --%>
 	<c:if test="${not empty admin}"> 
 		 <div class="row">
