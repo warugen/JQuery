@@ -64,7 +64,7 @@ SELECT * FROM MAGAZINE ORDER BY zRdate DESC;
 
 SELECT * FROM (SELECT ROWNUM RN, A.* 
     FROM (SELECT * FROM MAGAZINE ORDER BY zRdate DESC) A)
-WHERE RN BETWEEN 1 AND 12;
+WHERE RN BETWEEN 1 AND 5;
 
 -- 글갯수
 SELECT COUNT(*) FROM MAGAZINE;
@@ -182,7 +182,7 @@ DROP TABLE MONTHLY_SHOW;
 CREATE TABLE MONTHLY_SHOW (
 	sId        NUMBER(6)     PRIMARY KEY, -- 공연번호
 	sTitle     VARCHAR2(100)       NOT NULL, -- 공연제목
-	sContent   VARCHAR2(4000)       NOT NULL, -- 공연내용
+	sContent   CLOB, -- 공연내용
 	sStartDate DATE          NOT NULL, -- 공연시작일
 	sEndDate   DATE          NOT NULL, -- 공연종료일
 	sPlace     VARCHAR2(100) NOT NULL, -- 공연장소

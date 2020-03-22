@@ -27,7 +27,7 @@ CREATE TABLE NOTICE (
 	nId       NUMBER(6)      PRIMARY KEY,           -- 공지사항번호
     aId       VARCHAR2(30)   REFERENCES ADMIN(aId), -- 관리자id
 	nTitle    VARCHAR2(100)  NOT NULL,              -- 글제목
-	nContent  VARCHAR2(4000) NOT NULL,              -- 글본문
+	nContent  CLOB,              -- 글본문
 	nFileName VARCHAR(100),                  -- 첨부파일이름
 	nRdate    DATE DEFAULT SYSDATE,       -- 작성일
 	nHit      NUMBER(6)      DEFAULT 0              -- 조회수
@@ -64,3 +64,5 @@ WHERE RN BETWEEN 1 AND 9;
 
 -- 공지사항 글 갯수
 SELECT COUNT(*) FROM NOTICE;
+
+COMMIT;

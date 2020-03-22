@@ -27,12 +27,12 @@
 
 	<c:set var="SUCCESS" value="1" />
 	<c:set var="FAIL" value="0" />
-	<c:if test="${zmodifyResult eq SUCCESS }">
+	<c:if test="${NoticeModifyResult eq SUCCESS }">
 		<script>
 			alert('글수정 성공')
 		</script>
 	</c:if>
-	<c:if test="${zmodifyResult eq FAIL }">
+	<c:if test="${NoticeModifyResult eq FAIL }">
 		<script>
 			alert('글수정 실패')
 		</script>
@@ -42,45 +42,55 @@
 		<div class="row">
 		<div class="row"></div>
 		<div class="row"></div>
-        <form class="col s12" action="${conPath}/magazine_boradModify_view.do"  method="post">
+        <form class="col s12" action="${conPath}/notice_boradModify_view.do"  method="post">
         	<input type="hidden" name="pageNum" value="${param.pageNum }">
-			<input type="hidden" name="zId" value="${magazinew_view.zId }">
+			<input type="hidden" name="nId" value="${notice_view.nId }">
 			
             <section class="teal lighten-4" style="padding:1px;">
                 <div class="container">
                     <div class="row row-noclear">
                     <div class="section">
-					    <h3 class="center">${magazinew_view.zTitle }</h3>
-					    <p class="right"><fmt:formatDate value="${magazinew_view.zRdate }" pattern="yyyy년MM월dd일(E)일 작성" /></p>
-					    
+					    <h3 class="center">${notice_view.nTitle }</h3>
+					    <p class="right"><fmt:formatDate value="${notice_view.nRdate }" pattern="yyyy년MM월dd일(E)일 작성" /></p>
+					    <p class="right">관리자&nbsp;&nbsp;</p>
 				  	</div>
+				  	<!-- 
+                        	<h2 class="header center-on-small-only">${free_view.fTitle }</h2>
+                         
+                            <h5 class="light text-lighten-4 center-on-small-only">${free_view.mName}(${free_view.mId})님 </h5>
+                            <h5 class="light text-lighten-4 center-on-small-only"><fmt:formatDate value="${free_view.fRdate }" pattern="yyyy년MM월dd일(E)일 작성" /> </h5>
+                          -->   
+                        
+                        <h6 class="light text-lighten-4 center-on-small-only">
+                        <c:if test="${not empty notice_view.nFileName }">
+							첨부파일 : <a class="red-text" href="${conPath }/adminUp/${notice_view.nFileName }"	target="_blank">${notice_view.nFileName}</a>
+						</c:if> 
+						<c:if test="${empty notice_view.nFileName }">
+							첨부파일없음
+						</c:if> </h6>
+
                         <article class="card col s12 m12" style="animation-duration: 0.5s;" class="animated bounceInUp">
                             <section class="card-content">
                                 <div class="card-content">
-                                    <pre>${magazinew_view.zContent}</pre>
+                                    <pre>${notice_view.nContent}</pre>
                                 </div>
                             </section>
                         </article>
-                        
-						<c:if test="${not empty admin}">
+                        <c:if
+							test="${not empty admin }">
 							<input type="submit" value="수정" class="btn">
 							<input type="button" value="삭제" class="btn"
-								onclick="location='${conPath}/magazine_delete.do?zId=${magazinew_view.zId }&pageNum=${param.pageNum }'">
-						</c:if> 
+								onclick="location='${conPath}/notice_delete.do?nId=${notice_view.nId }&pageNum=${param.pageNum }'">
+						</c:if>  
+						<input type="button" value="목록" class="btn"
+						onclick="location='${conPath}/notice_list.do?pageNum=${param.pageNum }'">
 
-						<input type="button" value="목록" class="waves-effect waves-light btn"
-						onclick="location='${conPath}/magazine_list.do?pageNum=${param.pageNum }'">
-						<!-- 
-                        <a class="waves-effect waves-light btn"><i class="material-icons left">save</i>수정</a>
-                        <input type="button" class="btn" value="삭제">
-                        <input type="button" class="btn white-text grey" value="목록">
-                         -->
                     </div>
                 </div>
 
             </section>
         </form>
-    </div>
+        </div>
 	</div>
 	
 	<script

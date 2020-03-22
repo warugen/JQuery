@@ -35,6 +35,7 @@ public class MJoinSerivce implements Service {
 				String param = params.nextElement(); // mPhoto
 			//}
 			mPhoto = mRequest.getFilesystemName(param);
+			System.out.println("mPhoto = " + mPhoto);
 			mPhoto = (mPhoto==null)? "default_pf.png" : mPhoto;
 			
 			// 파라미터값 다 받아오기 -> DB에 넣기
@@ -76,7 +77,8 @@ public class MJoinSerivce implements Service {
 			OutputStream os = null;
 			try {
 				is = new FileInputStream(serverFile);
-				os = new FileOutputStream("D:\\mega_IT\\source\\7_jQuery\\culture4u\\WebContent\\membersPhoto/"+mPhoto);
+				//os = new FileOutputStream("D:\\mega_IT\\source\\7_jQuery\\culture4u\\WebContent\\membersPhoto/"+mPhoto);
+				os = new FileOutputStream("C:\\mega_IT\\source\\JQuery\\culture4u\\WebContent\\membersPhoto/"+mPhoto);
 				byte[] bs = new byte[(int)serverFile.length()];
 				while(true) {
 					int readbyteCnt = is.read(bs);

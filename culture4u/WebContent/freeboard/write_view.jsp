@@ -11,10 +11,9 @@
     <meta name="viewport" content="width = device-width, initial-scale = 1">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.js"></script>
+    
 </head>
 <body>
 	<jsp:include page="../main/header.jsp" />
@@ -44,52 +43,29 @@
                         <input class="file-path validate" type="text" placeholder="Upload file" />
                     </div>
                 </div>
-				<!-- 
-                <a class="waves-effect waves-light btn" onclick="submit();"><i class="material-icons left">save</i>저장</a>
-                <input type="reset" class="btn white-text grey" value="취소">
-                <input type="button" value="목록" class="waves-effect btn" onclick="location.href='${conPath}/free_list.do'">
-                 -->
+
                 파일 크기는 최대 10M입니다.
                 <div class="row"></div>
                 <div class="row"></div>
                 <div class="row"></div>
                 <div class="row"></div>                
-                <input type="submit" value="글쓰기" class="btn">
-				<input type="reset" value="취소" class="btn"> 
-				<input type="button" value="목록" class="waves-effect btn" onclick="location.href='${conPath}/free_list.do'">
+                <input type="submit" value="글쓰기" class="btn ">
+				<input type="reset" value="취소" class="btn "> 
+				<!-- <input type="button" value="목록" class="waves-effect btn" onclick="location.href='${conPath}/free_list.do'"> -->
+				<a href="${conPath}/free_list.do" class="btn waves-effect waves-light teal">목록</a>
             </div>
         </div>
-        <!-- 
-			<table>
-				<caption>글쓰기 폼</caption>
-				<tr>
-					<td>제목</td>
-					<td><input type="text" name="fTitle" required="required"
-						size="30"></td>
-				</tr>
-				<tr>
-					<td>본문</td>
-					<td><textarea name="fContent" rows="3" cols="32"></textarea></td>
-				</tr>
-				<tr>
-					<td>첨부파일</td>
-					<td><input type="file" name="filName"></td>
-				</tr>
-				<tr>
-					<td colspan="2"><input type="submit" value="글쓰기" class="btn">
-						<input type="reset" value="취소" class="btn"> <input
-						type="button" value="목록" class="btn"
-						onclick="location.href='${conPath}/list.do'">
-			</table>
-			 -->
 		</form>
 		</div>
 	</div>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.js"></script>
 <script>
 	$(document).ready(function() {
 		$('#summernote').summernote({
 			placeholder : '내용을 입력하세요...',
-			height: 350,
+			height: 450,
 	        minHeight: null,
 	        maxHeight: null,
 	        lang : 'ko-KR',

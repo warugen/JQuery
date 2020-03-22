@@ -38,6 +38,52 @@ public class MagazineDao {
 	}
 	
 	// 글목록(startRow부터 endRow까지)
+	public ArrayList<MagazineDto> sliderList(){
+		ArrayList<MagazineDto> list = new ArrayList<MagazineDto>();
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		// 슬라이더 최신날짜로 5개 가져오기
+		String sql = "SELECT * FROM (SELECT ROWNUM RN, A.* " + 
+				"    FROM (SELECT * FROM MAGAZINE ORDER BY zRdate DESC) A) " + 
+				"WHERE RN BETWEEN 1 AND 5";
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				int zId = rs.getInt("zId");
+				System.out.println("zId = "+zId);
+				String zTitle = rs.getString("zTitle");
+				String zContent = rs.getString("zContent");
+				String zFileName = rs.getString("zFileName");
+				Date   zRdate = rs.getDate("zRdate");
+				int    zHit = rs.getInt("zHit");
+				String zIp = rs.getString("zIp");
+				int zLike = rs.getInt("zLike");
+				
+				list.add(new MagazineDto(zId, zTitle, zContent, zFileName, zRdate, zHit, zIp, zLike));
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if(rs!=null) rs.close();
+				if(pstmt!=null) pstmt.close();
+				if(conn!=null) conn.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+		System.out.println("list size = "+list.size());
+		return list;
+	}
+	
+	// 글목록(startRow부터 endRow까지)
 	public ArrayList<MagazineDto> boardList(int startRow, int endRow){
 		ArrayList<MagazineDto> list = new ArrayList<MagazineDto>();
 		

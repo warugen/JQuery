@@ -27,6 +27,7 @@ import com.tj.culture4u.service.MImgUpload;
 import com.tj.culture4u.service.MJoinSerivce;
 import com.tj.culture4u.service.MLoginService;
 import com.tj.culture4u.service.MModifyService;
+import com.tj.culture4u.service.MagazineSlider;
 import com.tj.culture4u.service.MidConfirmService;
 import com.tj.culture4u.service.MlogoutService;
 import com.tj.culture4u.service.NContentService;
@@ -105,7 +106,9 @@ public class Controller extends HttpServlet {
 		 * 
 		 * *******************************************************************/
 		if (command.equals("/main.do")) {
-			// 매인화면 호출
+			// 매인화면 호출 매거진 슬라이더 표시 MagazineSlider.java
+			service = new MagazineSlider();
+			service.execute(request, response);
 			viewPage = "/main/main.jsp";
 			
 		} else if (command.equals("/adminloginView.do")) {
@@ -521,11 +524,7 @@ public class Controller extends HttpServlet {
 		 * *******************************************************************/
 		else if (command.equals("/noticeWrite_view.do")) {
 			// 공지사항 글쓰기 버튼 눌렀을때 -> 글쓰기 화면으로 이동하기
-			viewPage = "/notice/noticeWriteview.jsp";
-			
-		} else if (command.equals("/notice_write_view2.do")) {
-			// 공지사항 글쓰기 버튼 눌렀을때 -> 글쓰기 화면으로 이동하기
-			viewPage = "/notice/write_view2.jsp";
+			viewPage = "/notice/write_view.jsp";
 			
 		} else if (command.equals("/notice_write.do")) {
 			// 공지사항 글쓰기 저장하기 NWriteService.java
@@ -538,7 +537,7 @@ public class Controller extends HttpServlet {
 			service = new NContentService();
 			service.execute(request, response);
 //			viewPage = "/notice/content_view.jsp";
-			viewPage = "/notice/noticeContentview.jsp";
+			viewPage = "/notice/content_view.jsp";
 			
 		} else if (command.equals("/notice_list.do")) {
 			// 공지사항으로 이동하기 NListService.java
@@ -550,7 +549,7 @@ public class Controller extends HttpServlet {
 			// 공지사항 글수정하기화면 이동 처리  -> NModifyViewService.java
 			service = new NModifyViewService();
 			service.execute(request, response);
-			viewPage = "/notice/noticeModifyview.jsp";
+			viewPage = "/notice/modify_view.jsp";
 			
 		} else if(command.equals("/notice_boradModify.do")) {
 			// 공지사항 수정 처리  -> NModifyService.java

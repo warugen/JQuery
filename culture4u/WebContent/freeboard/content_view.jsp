@@ -42,7 +42,7 @@
 		<div class="row">
 		<div class="row"></div>
 		<div class="row"></div>
-        <form class="col s10" action="${conPath}/free_boradModify_view.do"  method="post">
+        <form class="col s12" action="${conPath}/free_boradModify_view.do"  method="post">
         	<input type="hidden" name="pageNum" value="${param.pageNum }">
 			<input type="hidden" name="fId" value="${free_view.fId }">
 			
@@ -51,8 +51,8 @@
                     <div class="row row-noclear">
                     <div class="section">
 					    <h3 class="center">${free_view.fTitle }</h3>
-					    <p class="right"><fmt:formatDate value="${free_view.fRdate }" pattern="yyyy년MM월dd일(E)일 작성" /></p></br>
-					    <p class="right">${free_view.mName}(${free_view.mId})님</p>
+					    <p class="right"><fmt:formatDate value="${free_view.fRdate }" pattern="yyyy년MM월dd일(E)일 작성" /></p>
+					    <p class="right">${free_view.mName}(${free_view.mId})님&nbsp;&nbsp;</p>
 				  	</div>
 				  	<!-- 
                         	<h2 class="header center-on-small-only">${free_view.fTitle }</h2>

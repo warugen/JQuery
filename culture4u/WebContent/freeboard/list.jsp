@@ -75,10 +75,11 @@
 	<!-- 
 		<td><a href="${conPath }/free_write_view.do"> 글 쓰 기 </a></td>
 		<td><a href="${conPath }/free_write_view2.do"> 글 쓰 기2 </a></td>
-		 -->
+		 
 		 <td>
 		 <a href="${conPath }/free_write_view.do" class="col s1 offset-s10 waves-effect waves-teal btn lighten-1">글쓰기</a>
 		 </td>
+		 -->
 	</c:if>
 	</tr>
 </table>

@@ -27,11 +27,11 @@ public class FModifyService implements Service {
 		try {
 			mRequest = new MultipartRequest(request, path, maxSize, "utf-8", new DefaultFileRenamePolicy());
 			Enumeration<String> params = mRequest.getFileNames();
-			while (params.hasMoreElements()) {
+			//while (params.hasMoreElements()) {
 				String param = params.nextElement();
 				fFileName = mRequest.getFilesystemName(param);
 				System.out.println("첨부파일 넘어온 파라미터 이름"+param+" / 첨부파일이름 : "+fFileName);
-			}
+			//}
 			String dbFileName = mRequest.getParameter("dbFileName");
 			System.out.println("DB에 저장된 파일이름 : "+dbFileName);
 			if (fFileName == null) {

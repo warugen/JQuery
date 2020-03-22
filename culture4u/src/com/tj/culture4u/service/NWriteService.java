@@ -28,8 +28,11 @@ public class NWriteService implements Service {
 		try {
 			mRequest = new MultipartRequest(request, path, maxSize, "utf-8", new DefaultFileRenamePolicy());
 			Enumeration<String> params = mRequest.getFileNames();
-			String param = params.nextElement();
-			nFileName = mRequest.getFilesystemName(param);
+			while (params.hasMoreElements()) {
+				String param = (String) params.nextElement();
+				nFileName = mRequest.getFilesystemName(param);
+				System.out.println("첨부파일 넘어온 파라미터 이름"+param+" / 첨부파일이름 : "+nFileName);
+			}
 			// mId, fTitle, fContent, fileName, fIp
 			HttpSession httpSession = request.getSession();
 			// 세션에서 mId값 가져오기
@@ -61,7 +64,7 @@ public class NWriteService implements Service {
 			try {
 				is = new FileInputStream(serverFile);
 				os = new FileOutputStream(
-						"D:\\mega_IT\\source\\7_jQuery\\culture4u\\WebContent\\adminUp/" + nFileName);
+						"C:\\mega_IT\\source\\JQuery\\culture4u\\WebContent\\adminUp/" + nFileName);
 				byte[] bs = new byte[(int) serverFile.length()];
 				while (true) {
 					int nByteCnt = is.read(bs);

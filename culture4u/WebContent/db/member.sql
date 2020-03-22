@@ -204,7 +204,7 @@ CREATE TABLE REVIEW_BOARD (
 	rId       NUMBER(6)      PRIMARY KEY,               -- 후기글번호
 	mId       VARCHAR2(30)   REFERENCES C_MEMBER(mId),  -- 아이디
 	rTitle    VARCHAR2(100)  NOT NULL,                  -- 글제목
-	rContent  VARCHAR2(4000) NOT NULL,                  -- 글본문
+	rContent  CLOB,                  -- 글본문
 	rFileName VARCHAR2(100),                            -- 첨부파일이름
 	rRdate    DATE DEFAULT SYSDATE,                     -- 작성일
 	rHit      NUMBER(6)      DEFAULT 0,                 -- 조회수
